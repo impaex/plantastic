@@ -17,8 +17,8 @@ Once you have imported the project into Android Studio, you will see these 3 but
 
 ![image](https://user-images.githubusercontent.com/43404248/155599302-7848f2e6-ec56-4cc1-a089-ac76187100a2.png)
 
-The left button allows you to pull the latest changes from the repository. This should always be done before you make any changes to the code.
-The middle button allows you to commit your changes.
+The left button allows you to pull the latest changes from the repository. This should always be done before you make any changes to the code. Always choose the merge option, not the rebase option.
+The middle button allows you to commit your changes. For each commit, please shortly describe what changes you made, as this will help with keeping up with tasks and debugging.
 The right button allows you to push your changes.
 
 When we decide to work in multiple branches, you will find a button in the bottom-right of the screen, which tells you which branch you're in now (branch called `main` in the example), and by clicking on it, you can move to different branches:
