@@ -1,2 +1,2 @@
-# DBL-app-dev
+# Plantastic
 Our little android smart planner.
