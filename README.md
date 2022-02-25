@@ -26,4 +26,6 @@ When we decide to work in multiple branches, you will find a button in the botto
 ![image](https://user-images.githubusercontent.com/43404248/155599728-f8db455d-1667-44cb-935d-7f8840e157c5.png)
 ![image](https://user-images.githubusercontent.com/43404248/155599987-c48bd41d-3db0-4bf2-b618-0366d0097f56.png)
 
+Once you clicked on a branch, click `checkout` to go into the branch.
+
 Before you switch branches, make sure you committed your changes!
