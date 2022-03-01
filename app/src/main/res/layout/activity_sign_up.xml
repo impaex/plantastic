@@ -91,7 +91,8 @@
         android:layout_height="wrap_content"
         android:text= "Don't have an account? Register"
         android:backgroundTint="#00000000"
-        android:textColor="@color/black">
+        android:textColor="@color/black"
+        style="?android:attr/borderlessButtonStyle">
 
 
     </Button>
