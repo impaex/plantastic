@@ -40,17 +40,17 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashScreen.this, SignUp.class);
-                Pair[] pairs = new Pair[1];
-                pairs[0] = new Pair<View, String>(image, "logo_image");
-
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this, pairs);
-                    startActivity(intent, options.toBundle());
-                }
-                else{
+//                Pair[] pairs = new Pair[1];
+//                pairs[0] = new Pair<View, String>(image, "logo_image");
+//
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this, pairs);
+//                    startActivity(intent, options.toBundle());
+//                }
+ //               else{
                 startActivity(intent);
                 finish();}
-            }
+//            }
         }, SPLASH_SCREEN);
 
     }
