@@ -12,15 +12,18 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/canvas">
+        android:src="@drawable/canvas"
+        android:transitionName="logo_image">
     </ImageView>
 
     <TextView
+        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Welcome"
-        android:textSize="35sp">
+        android:textSize="35sp"
+        >
     </TextView>
 
     <TextView
@@ -56,6 +59,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -66,6 +70,20 @@
             app:passwordToggleEnabled="true"
             android:layout_marginTop="3dp">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text= "Forgot Password?"
+                android:layout_gravity="right"
+                android:textSize="12sp"
+                android:layout_marginTop="-10dp"
+                android:layout_marginBottom="-14dp"
+                android:backgroundTint="#00000000"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle">
+
+
+            </Button>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
