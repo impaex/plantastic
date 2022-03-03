@@ -48,25 +48,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        databaseReference = FirebaseDatabase.getInstance().getReference("this is the path");
-//
-//        databaseReference.setValue("hello there").addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void unused) {
-//                Toast.makeText(getApplicationContext(), "Sucess", Toast.LENGTH_SHORT).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
-//            }
-//        }).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//
-//            }
-//        });
-
     }
 }
