@@ -2,14 +2,13 @@ package com.example.plantastic;
 
 public class registerHelperClass {
 
-    String firstnameString, lastnameString,emailString,password1String,password2String;
+    String firstnameString, lastnameString,emailString,password1String;
 
-    public registerHelperClass(String firstnameString, String lastnameString, String emailString, String password1String, String password2String) {
+    public registerHelperClass(String firstnameString, String lastnameString, String emailString, String password1String) {
         this.firstnameString = firstnameString;
         this.lastnameString = lastnameString;
         this.emailString = emailString;
         this.password1String = password1String;
-        this.password2String = password2String;
     }
 
     public registerHelperClass(){}
@@ -46,11 +45,4 @@ public class registerHelperClass {
         this.password1String = password1String;
     }
 
-    public String getPassword2String() {
-        return password2String;
-    }
-
-    public void setPassword2String(String password2String) {
-        this.password2String = password2String;
-    }
 }
