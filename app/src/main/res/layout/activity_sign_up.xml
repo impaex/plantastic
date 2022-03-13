@@ -41,11 +41,11 @@
         android:layout_marginTop="20dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/username"
+            android:id="@+id/username1"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
+            android:hint="Username"
             android:textColorHint="#B6B1B1">
 
 
@@ -62,7 +62,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwrd"
+            android:id="@+id/password3"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,13 +97,13 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/login1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GO"
-        app:backgroundTint="#000000"
         android:layout_marginTop="20dp"
-        android:textColor="@color/white">
-    </Button>
+        android:text="GO"
+        android:textColor="@color/white"
+        app:backgroundTint="#000000"></Button>
 
     <Button
         android:id="@+id/register1"

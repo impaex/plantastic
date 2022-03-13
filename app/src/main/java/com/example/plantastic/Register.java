@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
 
-    TextInputLayout firstname, lastname, email, password1, password2;
+    TextInputLayout username, firstname, lastname, email, password1, password2;
     Button registerBtn, forgotBtn, loginBtn;
 
     DatabaseReference databaseReference;
@@ -27,11 +27,12 @@ public class Register extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_register);
 
-        firstname = findViewById(R.id.firstNameTB);
+        firstname = findViewById(R.id.firstName);
         lastname = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         password1 = findViewById(R.id.password1);
         password2 = findViewById(R.id.password2);
+        username = findViewById(R.id.userName);
 
         registerBtn = findViewById(R.id.registerBtn);
         forgotBtn = findViewById(R.id.forgot);
@@ -150,15 +151,15 @@ public class Register extends AppCompatActivity {
         rootNode = FirebaseDatabase.getInstance();
         databaseReference = rootNode.getReference("users");
 
+        String usernameString = username.getEditText().getText().toString();
         String firstnameString = firstname.getEditText().getText().toString();
         String lastnameString = lastname.getEditText().getText().toString();
         String emailString = email.getEditText().getText().toString();
         String password1String = password1.getEditText().getText().toString();
         String password2String = password2.getEditText().getText().toString();
 
-        registerHelperClass helperClass = new registerHelperClass(firstnameString,
-                lastnameString, emailString, password1String);
+        registerHelperClass helperClass = new registerHelperClass(usernameString, firstnameString, lastnameString, emailString, password1String);
 
-        databaseReference.push().setValue(helperClass);
+        databaseReference.child(usernameString).setValue(helperClass);
     }
 }

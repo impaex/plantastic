@@ -2,47 +2,55 @@ package com.example.plantastic;
 
 public class registerHelperClass {
 
-    String firstnameString, lastnameString,emailString,password1String;
+    String username, firstname, lastname, email, password;
 
-    public registerHelperClass(String firstnameString, String lastnameString, String emailString, String password1String) {
-        this.firstnameString = firstnameString;
-        this.lastnameString = lastnameString;
-        this.emailString = emailString;
-        this.password1String = password1String;
+    public registerHelperClass(String username, String firstname, String lastname, String email, String password) {
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
     }
 
     public registerHelperClass(){}
 
-    public String getFirstnameString() {
-        return firstnameString;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstnameString(String firstnameString) {
-        this.firstnameString = firstnameString;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastnameString() {
-        return lastnameString;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setLastnameString(String lastnameString) {
-        this.lastnameString = lastnameString;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getEmailString() {
-        return emailString;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setEmailString(String emailString) {
-        this.emailString = emailString;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getPassword1String() {
-        return password1String;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword1String(String password1String) {
-        this.password1String = password1String;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
