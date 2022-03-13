@@ -38,7 +38,7 @@ public class SignUp extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doesUserExist();
+                loginUser();
             }
         });
 
@@ -82,7 +82,7 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-    public void loginUser(View view){
+    public void loginUser(){
         //Validate Login Info
         if (!validateUsername() | !validatePassword()){
             return;
@@ -121,7 +121,10 @@ public class SignUp extends AppCompatActivity {
                         String emailDB = snapshot.child(usernameEntered).child("email").getValue(String.class);
                         String usernameDB = snapshot.child(usernameEntered).child("username").getValue(String.class);
 
+                        //The class that will open when pressing log-in button
                         Intent intent = new Intent(getApplicationContext(), MonthlyView.class);
+
+
                         intent.putExtra("firstname", firstnameDB);
                         intent.putExtra("lastname", lastnameDB);
                         intent.putExtra("username", usernameDB);
@@ -129,6 +132,8 @@ public class SignUp extends AppCompatActivity {
                         intent.putExtra("password", passwordDB);
 
                         startActivity(intent);
+
+
 
                     }
                     else{
