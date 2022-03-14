@@ -2,6 +2,7 @@ package com.example.plantastic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -161,5 +162,9 @@ public class Register extends AppCompatActivity {
         registerHelperClass helperClass = new registerHelperClass(usernameString, firstnameString, lastnameString, emailString, password1String);
 
         databaseReference.child(usernameString).setValue(helperClass);
+
+        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+        startActivity(intent);
+
     }
 }
