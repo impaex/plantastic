@@ -116,13 +116,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:textColorHint="#B6B1B1">
+            android:textColorHint="#B6B1B1"
+            app:passwordToggleEnabled="true">
 
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text">
+                android:inputType="textPassword">
 
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -136,7 +137,9 @@
             android:layout_marginTop="3dp"
             android:hint="Confirm Password"
             android:textColorHint="#B6B1B1"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+
+            >
 
 
             <Button
@@ -158,7 +161,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text">
+                android:inputType="textPassword">
 
             </com.google.android.material.textfield.TextInputEditText>
 
