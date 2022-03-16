@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Plantastic</string>
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="front"><![CDATA[->]]></string>
 </resources>

@@ -101,7 +101,6 @@ public class SignUp extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
         Query checkUserExist = reference.orderByChild("username").equalTo(usernameEntered);
-
         checkUserExist.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
