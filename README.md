@@ -13,7 +13,7 @@ Use these credentials to login:
 - **Password:** `Admin123!`
 
 
-## Starter Tutorial
+## Get Started
 
 ### Importing project in Android Studio
 
