@@ -96,7 +96,6 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
         {
             String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            Toast.makeText(this,"Hello Javatpoint",Toast.LENGTH_SHORT).show();
 
         }
 
