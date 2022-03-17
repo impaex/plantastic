@@ -20,7 +20,7 @@ public class passwordForgetSplash extends AppCompatActivity {
     Animation topAnimation, bottomAnimation;
     TextView update;
     ImageView check;
-    private static int SPLASH_SCREEN = 1000;
+    private static int SPLASH_SCREEN = 1500;
 
 
 
