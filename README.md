@@ -2,6 +2,18 @@
 Our little android smart planner.
 
 
+## How to use the app?
+
+This will be a short explanation of how the app is used. This explanation will be updated with every major change to the app.
+
+### Logging into the app with admin account
+To get into the app easily, an admin account has been created. This is nothing more than a regular account to bypass the login screen.
+Use these credentials to login:
+- **Username:** `admin`
+- **Password:** `Admin123!`
+
+
+## Get Started
 
 ### Importing project in Android Studio
 
@@ -29,3 +41,5 @@ When we decide to work in multiple branches, you will find a button in the botto
 Once you clicked on a branch, click `checkout` to go into the branch.
 
 Before you switch branches, make sure you committed your changes!
+
+
