@@ -46,12 +46,6 @@
             android:textColorHint="#B6B1B1">
 
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text">
-
-            </com.google.android.material.textfield.TextInputEditText>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -143,7 +137,7 @@
 
 
             <Button
-                android:id="@+id/forgot"
+                android:id="@+id/forgotBTN"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -178,7 +172,7 @@
         app:backgroundTint="#000000"></Button>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/loginBTN"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -191,3 +185,4 @@
 
 
 </LinearLayout>
+

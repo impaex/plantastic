@@ -2,10 +2,9 @@ package com.example.plantastic;
 
 public class registerHelperClass {
 
-    String username, firstname, lastname, email, password;
+    String firstname, lastname, email, password;
 
-    public registerHelperClass(String username, String firstname, String lastname, String email, String password) {
-        this.username = username;
+    public registerHelperClass(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -14,13 +13,7 @@ public class registerHelperClass {
 
     public registerHelperClass(){}
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getFirstname() {
         return firstname;
