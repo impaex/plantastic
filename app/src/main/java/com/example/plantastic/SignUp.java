@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -128,8 +129,17 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if (user.isEmailVerified()){
                         Intent intent = new Intent(SignUp.this, MonthlyView.class);
                         startActivity(intent);
+                    }
+                    else{
+                        user.sendEmailVerification();
+                        Toast.makeText(SignUp.this, "Check your email to verify your account", Toast.LENGTH_LONG).show();
+                    }
+
 
                 }else{
                     Toast.makeText(SignUp.this, "Failed to Login", Toast.LENGTH_LONG).show();
