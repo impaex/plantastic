@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Plantastic">
         <activity
+            android:name=".EventEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WeeklyViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".passwordForgetSplash"
             android:exported="false" />
         <activity
