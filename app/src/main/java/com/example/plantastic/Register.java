@@ -1,21 +1,30 @@
 package com.example.plantastic;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
 
-    TextInputLayout username, firstname, lastname, email, password1, password2;
+    TextInputLayout firstname, lastname, email, password1, password2;
     Button registerBtn, forgotBtn, loginBtn;
+
+    private FirebaseAuth mAuth;
 
     DatabaseReference databaseReference;
     FirebaseDatabase rootNode;
@@ -33,11 +42,24 @@ public class Register extends AppCompatActivity {
         email = findViewById(R.id.email);
         password1 = findViewById(R.id.password1);
         password2 = findViewById(R.id.password2);
-        username = findViewById(R.id.userName);
 
         registerBtn = findViewById(R.id.registerBtn);
-        forgotBtn = findViewById(R.id.forgot);
-        loginBtn = findViewById(R.id.login);
+        forgotBtn = findViewById(R.id.forgotBTN);
+        loginBtn = findViewById(R.id.loginBTN);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login();
+            }
+        });
+
+        forgotBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { openResetPassword();}
+        });
         
         registerBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -45,6 +67,16 @@ public class Register extends AppCompatActivity {
                 register();
             }
         });
+    }
+
+    private void login() {
+        Intent loginIntent = new Intent(Register.this, SignUp.class);
+        startActivity(loginIntent);
+    }
+
+    private void openResetPassword() {
+        Intent resetPasswordIntent = new Intent(Register.this, forgotpassword.class);
+        startActivity(resetPasswordIntent);
     }
 
     private Boolean checkFirstName(){
@@ -83,20 +115,14 @@ public class Register extends AppCompatActivity {
     private Boolean checkEmail(){
 
         String val = email.getEditText().getText().toString();
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        String whiteSpace = "(?=\\s+$)";
         if (val.isEmpty()){
             email.setError("Field can't be empty");
             return false;
         }
-//        else if (!val.matches(whiteSpace)){
-//            email.setError("No white spaces allowed");
-//            return false;
-//        }
-//        else if (!val.matches(emailPattern)){
-//            email.setError("Invalid email");
-//            return false;
-//        }
+        else if (!Patterns.EMAIL_ADDRESS.matcher(val).matches()){
+            email.setError("Provide a valid email");
+            return false;
+        }
         else{
             email.setError(null);
             email.setErrorEnabled(false);
@@ -149,19 +175,41 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        rootNode = FirebaseDatabase.getInstance();
-        databaseReference = rootNode.getReference("users");
+//        rootNode = FirebaseDatabase.getInstance();
+//        databaseReference = rootNode.getReference("users");
 
-        String usernameString = username.getEditText().getText().toString();
         String firstnameString = firstname.getEditText().getText().toString();
         String lastnameString = lastname.getEditText().getText().toString();
         String emailString = email.getEditText().getText().toString();
         String password1String = password1.getEditText().getText().toString();
         String password2String = password2.getEditText().getText().toString();
 
-        registerHelperClass helperClass = new registerHelperClass(usernameString, firstnameString, lastnameString, emailString, password1String);
+        registerHelperClass helperClass = new registerHelperClass(firstnameString, lastnameString, emailString, password1String);
 
-        databaseReference.child(usernameString).setValue(helperClass);
+//        databaseReference.child(usernameString).setValue(helperClass);
+
+        mAuth.createUserWithEmailAndPassword(emailString, password1String).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(helperClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(Register.this, "User has been registered", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(Register.this, "Failed to register", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(Register.this, "Failed to register", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         Intent intent = new Intent(getApplicationContext(), SignUp.class);
         startActivity(intent);

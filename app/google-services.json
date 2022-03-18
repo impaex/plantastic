@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "564957975083",
+    "project_id": "plantastic-78fb9",
+    "storage_bucket": "plantastic-78fb9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564957975083:android:65c7bd31c0f197c0aad06e",
+        "android_client_info": {
+          "package_name": "com.example.plantastic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "564957975083-itvic0l57v509pt51rkjob913lkm6a73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYKlEfTLrDLanze4dfCdQv9660xuJA8qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "564957975083-itvic0l57v509pt51rkjob913lkm6a73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

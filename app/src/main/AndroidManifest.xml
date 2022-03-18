@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Plantastic">
         <activity
+            android:name=".passwordForgetSplash"
+            android:exported="false" />
+        <activity
+            android:name=".setNewPassword"
+            android:exported="false" />
+        <activity
+            android:name=".forgotpassword"
+            android:exported="false" />
+        <activity
             android:name=".Register"
             android:exported="false" />
         <activity
