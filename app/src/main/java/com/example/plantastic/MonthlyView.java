@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -73,5 +74,9 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
             CalendarUtils.selectedDate = date;
             setMonthView();
         }
+    }
+
+    public void weeklyAction(View view) {
+        startActivity(new Intent(this, WeeklyViewActivity.class));
     }
 }

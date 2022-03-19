@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Plantastic">
         <activity
+            android:name=".DailyViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".EventEditActivity"
             android:exported="false" />
         <activity

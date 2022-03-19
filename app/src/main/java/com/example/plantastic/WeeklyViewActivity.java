@@ -91,4 +91,8 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
     public void newEventAction(View view) {
         startActivity(new Intent(this, EventEditActivity.class));
     }
+
+    public void dailyAction(View view) {
+        startActivity(new Intent(this, DailyViewActivity.class));
+    }
 }
