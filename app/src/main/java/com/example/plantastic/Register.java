@@ -178,9 +178,9 @@ public class Register extends AppCompatActivity {
 //        rootNode = FirebaseDatabase.getInstance();
 //        databaseReference = rootNode.getReference("users");
 
-        String firstnameString = firstname.getEditText().getText().toString();
+        String firstnameString = firstname.getEditText().getText().toString().trim();
         String lastnameString = lastname.getEditText().getText().toString();
-        String emailString = email.getEditText().getText().toString();
+        String emailString = email.getEditText().getText().toString().trim();
         String password1String = password1.getEditText().getText().toString();
         String password2String = password2.getEditText().getText().toString();
 

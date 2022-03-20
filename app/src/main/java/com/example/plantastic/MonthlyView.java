@@ -79,4 +79,8 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
     public void weeklyAction(View view) {
         startActivity(new Intent(this, WeeklyViewActivity.class));
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

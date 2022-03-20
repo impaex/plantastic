@@ -88,4 +88,6 @@ public class DailyViewActivity extends AppCompatActivity {
     public void newEventAction(View view) {
         startActivity(new Intent(this, EventEditActivity.class));
     }
+
+
 }
