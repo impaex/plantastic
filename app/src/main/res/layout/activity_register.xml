@@ -8,7 +8,7 @@
     android:background="#fff"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".SignUp">
+    tools:context=".Login">
 
     <ImageView
         android:layout_width="100dp"

@@ -34,7 +34,7 @@
             android:name=".MonthlyView"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".Login"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

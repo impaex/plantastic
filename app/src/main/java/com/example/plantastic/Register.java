@@ -70,7 +70,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void login() {
-        Intent loginIntent = new Intent(Register.this, SignUp.class);
+        Intent loginIntent = new Intent(Register.this, Login.class);
         startActivity(loginIntent);
     }
 
@@ -211,7 +211,7 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+        Intent intent = new Intent(getApplicationContext(), Login.class);
         startActivity(intent);
 
     }
