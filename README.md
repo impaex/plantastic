@@ -9,8 +9,8 @@ This will be a short explanation of how the app is used. This explanation will b
 ### Logging into the app with admin account
 To get into the app easily, an admin account has been created. This is nothing more than a regular account to bypass the login screen.
 Use these credentials to login:
-- **Username:** `admin`
-- **Password:** `Admin123!`
+- **Email:** `daniel.van.ziel7@gmail.com`
+- **Password:** `123456789`
 
 
 ## Get Started
