@@ -4,9 +4,14 @@ import static com.example.plantastic.CalendarUtils.daysInMonthArray;
 import static com.example.plantastic.CalendarUtils.monthYearFromDate;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
 
 import android.content.Intent;
 import android.os.Build;
@@ -14,6 +19,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -25,6 +32,9 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -32,10 +42,20 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monthly_view);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
         initWidgets();
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
