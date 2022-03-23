@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/arrowback"
-            android:title="Home" />
 
         <item
             android:id="@+id/nav_daily"
@@ -23,16 +19,11 @@
 
     </group>
 
-    <group android:checkableBehavior="single">
 
-        <item android:title="Profile">
+    <item android:title="Profile">
 
-            <menu>
-
-                <item
-                    android:id="@+id/nav_login"
-                    android:icon="@drawable/arrowback"
-                    android:title="Login" />
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/arrowback"
@@ -42,15 +33,11 @@
                     android:icon="@drawable/arrowback"
                     android:title="Profile" />
 
-
-            </menu>
-
-
-        </item>
-
-    </group>
+            </group>
+        </menu>
 
 
+    </item>
 
 
 </menu>

@@ -2,16 +2,24 @@ package com.example.plantastic;
 
 import static com.example.plantastic.CalendarUtils.selectedDate;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.lang.reflect.Array;
 import java.time.LocalTime;
@@ -20,16 +28,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DailyViewActivity extends AppCompatActivity {
+public class DailyViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView monthDayText;
     private TextView dayOfWeekView;
     private ListView hourListView;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_daily_view);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+
         initWidget(); //finds each of the views by its IDs
     }
 
@@ -90,4 +116,23 @@ public class DailyViewActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.nav_daily:
+                break;
+            case R.id.nav_monthly:
+                Intent intent1 = new Intent(getApplicationContext(), MonthlyView.class);
+                startActivity(intent1);
+                break;
+            case R.id.nav_weekly:
+                Intent intent = new Intent(getApplicationContext(), WeeklyViewActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+
+        return true;
+    }
 }
