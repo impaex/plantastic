@@ -136,6 +136,10 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
                 Intent intent1 = new Intent(getApplicationContext(), WeeklyViewActivity.class);
                 startActivity(intent1);
                 break;
+            case R.id.nav_logout:
+                Intent intent2 = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent2);
+                break;
 
         }
 

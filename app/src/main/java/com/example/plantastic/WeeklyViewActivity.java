@@ -138,6 +138,10 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
                 break;
             case R.id.nav_weekly:
                 break;
+            case R.id.nav_logout:
+                Intent intent2 = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent2);
+                break;
 
         }
 

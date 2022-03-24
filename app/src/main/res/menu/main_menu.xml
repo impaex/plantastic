@@ -28,10 +28,7 @@
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/arrowback"
                     android:title="Logout" />
-                <item
-                    android:id="@+id/nav_profile"
-                    android:icon="@drawable/arrowback"
-                    android:title="Profile" />
+
 
             </group>
         </menu>

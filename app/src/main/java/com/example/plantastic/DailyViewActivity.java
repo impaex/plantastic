@@ -130,6 +130,10 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
                 Intent intent = new Intent(getApplicationContext(), WeeklyViewActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_logout:
+                Intent intent2 = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent2);
+                break;
 
         }
 
