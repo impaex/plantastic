@@ -2,6 +2,7 @@ package com.example.plantastic;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -26,13 +28,15 @@ import java.util.Date;
 public class EventEditActivity  extends AppCompatActivity {
 
     private EditText eventNameET;
-    private TextView eventTimeTV;
-    private Button eventDateBTN;
+    private Button eventDateBTN, eventTimeBTN;
     DatePickerDialog datePickerDialog;
 
     String date1;
     String monthString;
     String dayString;
+
+    int hour, minute, seconds;
+    String hourString, minuteString, secondsString;
 
     private LocalTime time;
 
@@ -45,8 +49,26 @@ public class EventEditActivity  extends AppCompatActivity {
         initDatePicker();
         time = LocalTime.now();
         eventDateBTN.setText("Date: " + getTodaysDate());
-        eventTimeTV.setText("Time: " + CalendarUtils.formattedTime(time));
+        hour = -1;
+        formatTime(hour, minute);
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void formatTime(int hour, int minute) {
+        if(time.getHour() < 10){
+            hourString =  "0" + time.getHour();
+        }
+        else{
+            hourString =  "" + time.getHour();
+        }
+        if(time.getMinute() < 10){
+            minuteString =  "0" + time.getMinute();
+        }
+        else{
+            minuteString =  "" + time.getMinute();
+        }
+        eventTimeBTN.setText("Time: " + hourString + ":" + minuteString);
     }
 
     private String getTodaysDate() {
@@ -76,7 +98,7 @@ public class EventEditActivity  extends AppCompatActivity {
     private void initWidgets() {
         eventNameET = findViewById(R.id.eventNameET);
         eventDateBTN = findViewById(R.id.eventDateBTN);
-        eventTimeTV = findViewById(R.id.eventTimeTV);
+        eventTimeBTN = findViewById(R.id.eventTimeBTN1);
     }
 
     private void initDatePicker(){
@@ -146,8 +168,6 @@ public class EventEditActivity  extends AppCompatActivity {
         if(month == 12)
             return "DEC";
 
-
-
         //Should never happen
         return "JAN";
     }
@@ -156,12 +176,43 @@ public class EventEditActivity  extends AppCompatActivity {
     public void saveEventAction(View view){
         String eventName = eventNameET.getText().toString();
         LocalDate localDate = LocalDate.parse(date1);
-        Event newEvent = new Event(eventName, localDate, time);
+        LocalTime localTime = LocalTime.parse(hourString+":"+minuteString+ ":00");
+        Event newEvent = new Event(eventName, localDate, localTime);
         Event.eventsList.add(newEvent);
         finish();
+
     }
 
     public void openDatePicker(View view) {
         datePickerDialog.show();
+    }
+
+    public void openTimePicker(View view) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                hour = selectedHour;
+                minute = selectedMinute;
+                if(hour < 10){
+                    hourString =  "0" + hour;
+                }
+                else{
+                    hourString =  "" + hour;
+                }
+                if(minute < 10){
+                    minuteString =  "0" + minute;
+                }
+                else{
+                    minuteString =  "" + minute;
+                }
+                eventTimeBTN.setText("Time: " + hourString + ":" + minuteString);
+            }
+        };
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
+
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
+
     }
 }

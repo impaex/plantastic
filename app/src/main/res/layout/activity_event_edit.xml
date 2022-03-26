@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="@color/white"
         android:backgroundTint="@color/white"
         android:text="Date"
         android:textAlignment="center"
@@ -42,8 +41,8 @@
         app:backgroundTint="#FFFFFF"
         android:onClick="openDatePicker"/>
 
-    <TextView
-        android:id="@+id/eventTimeTV"
+    <Button
+        android:id="@+id/eventTimeBTN1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -51,7 +50,9 @@
         android:text="Time"
         android:textSize="20sp"
         android:textAlignment="center"
-        android:textColor="@color/black"/>
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:onClick="openTimePicker"/>
 
     <Button
         android:layout_marginTop="20dp"
