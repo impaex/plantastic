@@ -1,4 +1,4 @@
-package com.example.plantastic;
+package com.example.plantastic.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.plantastic.R;
 
 public class SplashScreen extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.plantastic;
+package com.example.plantastic.login;
 
 public class registerHelperClass {
 

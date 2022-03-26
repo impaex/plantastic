@@ -1,4 +1,4 @@
-package com.example.plantastic;
+package com.example.plantastic.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.example.plantastic.MonthlyView;
+import com.example.plantastic.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -48,6 +50,7 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         setLoginInfo();
+
 
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override

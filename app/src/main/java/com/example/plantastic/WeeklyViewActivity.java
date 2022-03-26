@@ -20,8 +20,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.plantastic.login.Login;
 import com.google.android.material.navigation.NavigationView;
 
 import java.time.LocalDate;
@@ -56,6 +56,7 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        navigationView.setCheckedItem(R.id.nav_weekly);
 
         navigationView.setNavigationItemSelectedListener(this);
 

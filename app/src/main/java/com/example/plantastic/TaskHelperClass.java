@@ -2,7 +2,7 @@ package com.example.plantastic;
 
 public class TaskHelperClass {
 
-    String name, description, notes;
+    String name, description, notes, date;
 
 
     public TaskHelperClass() {
@@ -12,6 +12,7 @@ public class TaskHelperClass {
         this.name = name;
         this.description = description;
         this.notes = notes;
+        this.date = date;
     }
 
     public String getName() {
@@ -37,4 +38,9 @@ public class TaskHelperClass {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+//    public String getDate(){
+//        return date;
+//    }
+//    public void setDate(String date){this.date = date;}
 }

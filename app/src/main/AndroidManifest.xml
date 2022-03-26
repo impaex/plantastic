@@ -19,28 +19,28 @@
             android:name=".WeeklyViewActivity"
             android:exported="false" />
         <activity
-            android:name=".passwordForgetSplash"
+            android:name=".login.passwordForgetSplash"
             android:exported="false" />
         <activity
-            android:name=".setNewPassword"
+            android:name=".login.setNewPassword"
             android:exported="false" />
         <activity
-            android:name=".forgotpassword"
+            android:name=".login.forgotpassword"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".login.Register"
             android:exported="false" />
         <activity
             android:name=".MonthlyView"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".login.Login"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".login.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

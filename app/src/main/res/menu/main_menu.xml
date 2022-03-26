@@ -29,7 +29,6 @@
                     android:icon="@drawable/arrowback"
                     android:title="Logout" />
 
-
             </group>
         </menu>
 

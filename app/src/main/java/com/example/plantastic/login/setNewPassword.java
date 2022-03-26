@@ -1,8 +1,10 @@
-package com.example.plantastic;
+package com.example.plantastic.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.plantastic.R;
 
 public class setNewPassword extends AppCompatActivity {
 
