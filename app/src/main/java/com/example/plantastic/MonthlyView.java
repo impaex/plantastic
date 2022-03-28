@@ -53,7 +53,6 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private String onlineUserID;
-    public boolean pulledDatabase;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -83,9 +82,8 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
         setMonthView();
 
         //Retrieving Events from database
-        if (!pulledDatabase){
+        if (Event.eventsList.size() == 0) {
             retrieveEvents();
-            pulledDatabase = true;
         }
 
 
