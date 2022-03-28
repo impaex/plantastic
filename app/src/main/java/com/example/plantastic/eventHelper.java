@@ -2,16 +2,18 @@ package com.example.plantastic;
 
 public class eventHelper {
 
-    private String name, date, time, id;
+    private String name, startDate, endDate, startTime, endTime, id;
 
     public eventHelper(){
 
     }
 
-    public eventHelper(String id, String name, String date, String time) {
+    public eventHelper(String id, String name, String startDate, String endDate, String startTime, String endTime) {
         this.name = name;
-        this.date = date;
-        this.time = time;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.id = id;
     }
 
@@ -31,19 +33,35 @@ public class eventHelper {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartDate(String date) {
+        this.startDate = date;
     }
 
-    public String getTime() {
-        return time;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setEndDate(String date) {
+        this.endTime = date;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String time) {
+        this.startTime = time;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String time) {
+        this.endTime = time;
     }
 }
