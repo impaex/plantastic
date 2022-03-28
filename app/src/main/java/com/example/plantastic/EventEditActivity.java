@@ -36,17 +36,24 @@ import java.util.Date;
 public class EventEditActivity  extends AppCompatActivity {
 
     private EditText eventNameET;
-    private Button eventDateBTN, eventTimeBTN;
+    private Button eventStartDateBTN, eventStartTimeBTN;
+    private Button eventEndDateBTN, eventEndTimeBTN;
     DatePickerDialog datePickerDialog;
 
-    String date1;
-    String monthString;
-    String dayString;
+    // Strings for saving the data to the database.
+    String startDate;
+    String startMonthString;
+    String startDayString;
 
-    int hour, minute, seconds;
-    String hourString, minuteString, secondsString;
+    String endDate;
+    String endMonthString;
+    String endDayString;
 
-    private LocalTime time;
+    int startHour, startMinute, endHour, endMinute;
+
+    String hourString, minuteString, targetHourString, targetMinuteString;
+
+    private LocalTime timeNow;
 
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
@@ -60,10 +67,16 @@ public class EventEditActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_event_edit);
         initWidgets();
         initDatePicker();
-        time = LocalTime.now();
-        eventDateBTN.setText("Date: " + getTodaysDate());
-        hour = -1;
-        formatTime(hour, minute);
+        timeNow = LocalTime.now();
+
+        // Sets the date buttons to the current day.
+        eventStartDateBTN.setText("Date: " + getTodaysDate());
+        eventEndDateBTN.setText("Date: " + getTodaysDate());
+
+        startHour = -1;
+
+        // This formats the current time and adds it to the buttons.
+        formatTime(startHour, startMinute);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -72,23 +85,43 @@ public class EventEditActivity  extends AppCompatActivity {
 
     }
 
+    // Time formatter function.
+    // This also initializes the time buttons with a time.
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void formatTime(int hour, int minute) {
-        if(time.getHour() < 10){
-            hourString =  "0" + time.getHour();
+        int currentHour = timeNow.getHour();
+        int targetHour = currentHour + 1;
+
+        // Convert the current hour in a nice string.
+        if(currentHour < 10) {
+            hourString =  "0" + timeNow.getHour();
         }
-        else{
-            hourString =  "" + time.getHour();
+        else {
+            hourString =  "" + timeNow.getHour();
         }
-        if(time.getMinute() < 10){
-            minuteString =  "0" + time.getMinute();
+
+        // Convert the target hour in a nice string.
+        if(targetHour < 10) {
+            targetHourString =  "0" + timeNow.getHour();
         }
-        else{
-            minuteString =  "" + time.getMinute();
+        else {
+            targetHourString =  "" + timeNow.getHour();
         }
-        eventTimeBTN.setText("Time: " + hourString + ":" + minuteString);
+
+        // Convert the current minute in a nice string.
+        if(timeNow.getMinute() < 10) {
+            minuteString =  "0" + timeNow.getMinute();
+        }
+        else {
+            minuteString =  "" + timeNow.getMinute();
+        }
+
+        // Set time buttons to the current time, and current time + 1 hour.
+        eventStartTimeBTN.setText("Time: " + hourString + ":" + minuteString);
+        eventEndTimeBTN.setText("Time: " + targetHourString +  ":" + minuteString);
     }
 
+    // Function to prettify todays date and return it.
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
@@ -97,26 +130,29 @@ public class EventEditActivity  extends AppCompatActivity {
         month++;
 
         if(month < 10){
-            monthString = "0" + month;
+            startMonthString = "0" + month;
         }
         else{
-            monthString = "" + month;
+            startMonthString = "" + month;
         }
         if(day < 10){
-            dayString = "0" + day;
+            startDayString = "0" + day;
         }
         else{
-            dayString = "" + day;
+            startDayString = "" + day;
         }
 
-        date1 = year + "-" + monthString + "-" + dayString;
+        startDate = year + "-" + startMonthString + "-" + startDayString;
         return makeDateString(day, month, year);
     }
 
+    // Initializes the buttons in the view.
     private void initWidgets() {
         eventNameET = findViewById(R.id.eventNameET);
-        eventDateBTN = findViewById(R.id.eventDateBTN);
-        eventTimeBTN = findViewById(R.id.eventTimeBTN1);
+        eventStartDateBTN = findViewById(R.id.eventDateStartBTN);
+        eventEndDateBTN = findViewById(R.id.eventDateEndBTN);
+        eventStartTimeBTN = findViewById(R.id.eventTimeStartBTN);
+        eventEndTimeBTN = findViewById(R.id.eventTimeEndBTN);
     }
 
     private void initDatePicker(){
@@ -127,21 +163,22 @@ public class EventEditActivity  extends AppCompatActivity {
                 String date = makeDateString(day, month, year);
 
                 if(month < 10){
-                    monthString = "0" + month;
+                    startMonthString = "0" + month;
                 }
                 else{
-                    monthString = "" + month;
-                }
-                if(day < 10){
-                    dayString = "0" + day;
-                }
-                else{
-                    dayString = "" + day;
+                    startMonthString = "" + month;
                 }
 
-                date1 = year + "-" + monthString + "-" + dayString;
-                System.out.println(date1);
-                eventDateBTN.setText("Date: " + date);
+                if(day < 10){
+                    startDayString = "0" + day;
+                }
+                else{
+                    startDayString = "" + day;
+                }
+
+                startDate = year + "-" + startMonthString + "-" + startDayString;
+                System.out.println(startDate);
+                eventStartDateBTN.setText("Date: " + date);
             }
         };
 
@@ -156,10 +193,12 @@ public class EventEditActivity  extends AppCompatActivity {
 
     }
 
+    // Returns a prettified string of a date.
     private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
     }
 
+    // Prettifies the month in a date.
     private String getMonthFormat(int month) {
         if(month == 1)
             return "JAN";
@@ -193,13 +232,14 @@ public class EventEditActivity  extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveEventAction(View view){
         String eventName = eventNameET.getText().toString();
-        LocalDate localDate = LocalDate.parse(date1);
+        LocalDate localDate = LocalDate.parse(startDate);
         LocalTime localTime = LocalTime.parse(hourString+":"+minuteString+ ":00");
 
         String id = reference.push().getKey();
-        String time = hourString+":"+minuteString+ ":00";
+        String startTime = hourString + ":" + minuteString + ":00";
+        String endTime = targetHourString + ":" + targetMinuteString + ":00";
 
-        eventHelper eventHelper = new eventHelper(id, eventName, date1, time);
+        eventHelper eventHelper = new eventHelper(id, eventName, startDate, endDate, startTime, endTime);
         reference.child(id).setValue(eventHelper).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -225,25 +265,25 @@ public class EventEditActivity  extends AppCompatActivity {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                hour = selectedHour;
-                minute = selectedMinute;
-                if(hour < 10){
-                    hourString =  "0" + hour;
+                startHour = selectedHour;
+                startMinute = selectedMinute;
+                if(startHour < 10){
+                    hourString =  "0" + startHour;
                 }
                 else{
-                    hourString =  "" + hour;
+                    hourString =  "" + startHour;
                 }
-                if(minute < 10){
-                    minuteString =  "0" + minute;
+                if(startMinute < 10){
+                    minuteString =  "0" + startMinute;
                 }
                 else{
-                    minuteString =  "" + minute;
+                    minuteString =  "" + startMinute;
                 }
-                eventTimeBTN.setText("Time: " + hourString + ":" + minuteString);
+                eventStartTimeBTN.setText("Time: " + hourString + ":" + minuteString);
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, startHour, startMinute, true);
 
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
