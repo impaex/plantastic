@@ -17,15 +17,28 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.plantastic.login.Login;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class MonthlyView extends AppCompatActivity implements CalendarAdapter.onItemListener, NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +48,12 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+
+    private DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private String onlineUserID;
+    public boolean pulledDatabase;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -62,6 +81,73 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
         initWidgets();
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
+
+        //Retrieving Events from database
+        if (!pulledDatabase){
+            retrieveEvents();
+            pulledDatabase = true;
+        }
+
+
+
+    }
+
+    private void retrieveEvents() {
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        onlineUserID = mUser.getUid();
+
+        FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    eventHelper event = snapshot.getValue(eventHelper.class);
+                    System.out.println(event.getDate());
+                    System.out.println(event.getName());
+                    System.out.println(event.getTime());
+
+                    String name = event.getName();
+                    LocalDate localDate = LocalDate.parse(event.getDate());
+                    LocalTime localTime = LocalTime.parse(event.getTime());
+
+
+                    Event newEvent = new Event(name, localDate, localTime);
+                    Event.eventsList.add(newEvent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+//
+//        reference = FirebaseDatabase.getInstance().getReference("tasks");
+//        reference.child(onlineUserID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//
+//                if (task.isSuccessful()){
+//
+//                    if (task.getResult().exists()){
+//                        DataSnapshot dataSnapshot = task.getResult();
+//                        String eventName = String.valueOf(dataSnapshot.child("name"));
+//                        String eventDate = String.
+//
+//                    }
+//
+//                }
+//                else{
+//                    Toast.makeText(getApplicationContext(), "Couldn't sync tasks, check internet connection", Toast.LENGTH_LONG).show();
+//                }
+//
+//            }
+//        });
+
     }
 
 

@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +17,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -40,6 +48,11 @@ public class EventEditActivity  extends AppCompatActivity {
 
     private LocalTime time;
 
+    private DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private String onlineUserID;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -51,6 +64,11 @@ public class EventEditActivity  extends AppCompatActivity {
         eventDateBTN.setText("Date: " + getTodaysDate());
         hour = -1;
         formatTime(hour, minute);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        onlineUserID = mUser.getUid();
+        reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
 
     }
 
@@ -177,6 +195,22 @@ public class EventEditActivity  extends AppCompatActivity {
         String eventName = eventNameET.getText().toString();
         LocalDate localDate = LocalDate.parse(date1);
         LocalTime localTime = LocalTime.parse(hourString+":"+minuteString+ ":00");
+
+        String id = reference.push().getKey();
+        String time = hourString+":"+minuteString+ ":00";
+
+        eventHelper eventHelper = new eventHelper(id, eventName, date1, time);
+        reference.child(id).setValue(eventHelper).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(EventEditActivity.this, "Task has been added", Toast.LENGTH_LONG).show();
+                }
+                else{Toast.makeText(EventEditActivity.this, "Task has not been added, try again", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         Event newEvent = new Event(eventName, localDate, localTime);
         Event.eventsList.add(newEvent);
         finish();
