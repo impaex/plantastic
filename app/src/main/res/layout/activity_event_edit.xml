@@ -34,12 +34,12 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
-        android:text="Date"
+        android:onClick="openDatePicker"
+        android:text="From Date"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:backgroundTint="#FFFFFF"
-        android:onClick="openDatePicker"/>
+        app:backgroundTint="#FFFFFF" />
 
     <Button
         android:id="@+id/eventTimeBTN1"
@@ -47,12 +47,39 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Time"
-        android:textSize="20sp"
-        android:textAlignment="center"
         android:backgroundTint="@color/white"
+        android:onClick="openTimePicker"
+        android:text="From Time"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:onClick="openTimePicker"/>
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/eventDateBTN2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:onClick="openDatePicker"
+        android:text="Till Date"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:backgroundTint="#FFFFFF" />
+
+    <Button
+        android:id="@+id/eventTimeBTN2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:onClick="openTimePicker"
+        android:text="Till Time"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <Button
         android:layout_marginTop="20dp"
