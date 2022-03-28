@@ -102,13 +102,10 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     eventHelper event = snapshot.getValue(eventHelper.class);
-                    System.out.println(event.getDate());
-                    System.out.println(event.getName());
-                    System.out.println(event.getTime());
 
                     String name = event.getName();
-                    LocalDate localDate = LocalDate.parse(event.getDate());
-                    LocalTime localTime = LocalTime.parse(event.getTime());
+                    LocalDate localDate = LocalDate.parse(event.getStartDate());
+                    LocalTime localTime = LocalTime.parse(event.getStartTime());
 
 
                     Event newEvent = new Event(name, localDate, localTime);
