@@ -39,6 +39,7 @@ public class EventEditActivity  extends AppCompatActivity {
     private Button eventStartDateBTN, eventStartTimeBTN;
     private Button eventEndDateBTN, eventEndTimeBTN;
     DatePickerDialog datePickerDialog;
+    DatePickerDialog datePickerDialog1;
 
     // Strings for saving the data to the database.
     String startDate;
@@ -67,6 +68,7 @@ public class EventEditActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_event_edit);
         initWidgets();
         initDatePicker();
+        initDatePicker1();
         timeNow = LocalTime.now();
 
         // Sets the date buttons to the current day.
@@ -84,6 +86,7 @@ public class EventEditActivity  extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
 
     }
+
 
     // Time formatter function.
     // This also initializes the time buttons with a time.
@@ -195,6 +198,47 @@ public class EventEditActivity  extends AppCompatActivity {
 
     }
 
+
+    private void initDatePicker1() {
+        DatePickerDialog.OnDateSetListener dateSetListener1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month++;
+                String date = makeDateString(day, month, year);
+
+                if(month < 10){
+                    endMonthString = "0" + month;
+                }
+                else{
+                    endMonthString = "" + month;
+                }
+
+                if(day < 10){
+                    endDayString = "0" + day;
+                }
+                else{
+                    endDayString = "" + day;
+                }
+
+                endDate = year + "-" + endMonthString + "-" + endDayString;
+                eventEndDateBTN.setText("Date: " + date);
+
+
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        datePickerDialog1 = new DatePickerDialog(this, style, dateSetListener1, year, month, day);
+
+
+    }
+
     // Returns a prettified string of a date.
     private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
@@ -291,4 +335,6 @@ public class EventEditActivity  extends AppCompatActivity {
         timePickerDialog.show();
 
     }
+
+    public void openDatePicker1(View view) {datePickerDialog1.show(); }
 }
