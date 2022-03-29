@@ -10,10 +10,11 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="120dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginLeft="49dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/logo"
-        android:transitionName="logo_image"/>
+        android:transitionName="logo_image" />
 
 
     <TextView
