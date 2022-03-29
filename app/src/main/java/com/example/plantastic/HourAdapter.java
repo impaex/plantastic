@@ -1,6 +1,7 @@
 package com.example.plantastic;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,8 +76,9 @@ public class HourAdapter extends ArrayAdapter<HourEvent>
             setEvent(event1, events.get(0));
             setEvent(event2, events.get(1));
             event3.setVisibility(View.VISIBLE);
+            event3.setBackgroundColor(Color.GRAY);
             String eventsNotShown = String.valueOf(events.size() - 2);
-            eventsNotShown += "More Events";
+            eventsNotShown += " more Events";
 
             event3.setText(eventsNotShown);
 
