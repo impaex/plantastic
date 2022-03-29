@@ -61,7 +61,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
-        android:onClick="openDatePicker"
+        android:onClick="openDatePicker1"
         android:text="Till Date"
         android:textAlignment="center"
         android:textColor="@color/black"
