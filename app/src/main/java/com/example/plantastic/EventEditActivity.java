@@ -336,5 +336,14 @@ public class EventEditActivity  extends AppCompatActivity {
 
     }
 
+
+    public void openTimePicker1(View view) {
+
+
+    }
+
     public void openDatePicker1(View view) {datePickerDialog1.show(); }
+
+    public void openTimePicker1(View view) {
+    }
 }

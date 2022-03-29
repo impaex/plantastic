@@ -75,7 +75,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
-        android:onClick="openTimePicker"
+        android:onClick="openTimePicker1"
         android:text="Till Time"
         android:textAlignment="center"
         android:textColor="@color/black"
