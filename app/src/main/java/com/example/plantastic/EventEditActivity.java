@@ -111,14 +111,16 @@ public class EventEditActivity  extends AppCompatActivity {
         // Convert the current minute in a nice string.
         if(timeNow.getMinute() < 10) {
             minuteString =  "0" + timeNow.getMinute();
+            targetMinuteString =  "0" + timeNow.getMinute();
         }
         else {
             minuteString =  "" + timeNow.getMinute();
+            targetMinuteString =  "" + timeNow.getMinute();
         }
 
         // Set time buttons to the current time, and current time + 1 hour.
         eventStartTimeBTN.setText("Time: " + hourString + ":" + minuteString);
-        eventEndTimeBTN.setText("Time: " + targetHourString +  ":" + minuteString);
+        eventEndTimeBTN.setText("Time: " + targetHourString +  ":" + targetMinuteString);
     }
 
     // Function to prettify todays date and return it.
@@ -236,8 +238,8 @@ public class EventEditActivity  extends AppCompatActivity {
         LocalTime localTime = LocalTime.parse(hourString+":"+minuteString+ ":00");
 
         String id = reference.push().getKey();
-        String startTime = hourString + ":" + minuteString + ":00";
-        String endTime = targetHourString + ":" + targetMinuteString + ":00";
+        String startTime = hourString + ":" + minuteString;
+        String endTime = targetHourString + ":" + targetMinuteString;
 
         eventHelper eventHelper = new eventHelper(id, eventName, startDate, endDate, startTime, endTime);
         reference.child(id).setValue(eventHelper).addOnCompleteListener(new OnCompleteListener<Void>() {
