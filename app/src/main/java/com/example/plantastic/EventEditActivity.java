@@ -337,13 +337,35 @@ public class EventEditActivity  extends AppCompatActivity {
     }
 
 
-    public void openTimePicker1(View view) {
-
-
-    }
 
     public void openDatePicker1(View view) {datePickerDialog1.show(); }
 
     public void openTimePicker1(View view) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener1 = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                endHour = selectedHour;
+                endMinute = selectedMinute;
+                if(endHour < 10){
+                    targetHourString =  "0" + endHour;
+                }
+                else{
+                    targetHourString =  "" + endHour;
+                }
+                if(endMinute < 10 || endMinute == 0){
+                    targetMinuteString =  "0" + endMinute;
+                }
+                else{
+                    targetMinuteString =  "" + endMinute;
+                }
+                eventEndTimeBTN.setText("Time: " + targetHourString + ":" + targetMinuteString);
+            }
+        };
+
+        TimePickerDialog timePickerDialog1 = new TimePickerDialog(this, onTimeSetListener1, endHour, endMinute, true);
+
+        timePickerDialog1.setTitle("Select Time");
+        timePickerDialog1.show();
+
     }
 }
