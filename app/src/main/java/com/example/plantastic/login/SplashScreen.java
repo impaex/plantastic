@@ -23,6 +23,8 @@ public class SplashScreen extends AppCompatActivity {
     TextView name;
     private static int SPLASH_SCREEN = 2000;
 
+
+    //Splashscreen redirects the user to the login screen after 2,0 seconds have passed.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

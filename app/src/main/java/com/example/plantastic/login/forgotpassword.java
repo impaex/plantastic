@@ -41,6 +41,9 @@ public class forgotpassword extends AppCompatActivity {
         });
     }
 
+    //After verifying that the email exists, it will send an email to the user where they can
+    //make a new password, after which they will be redirected to a splashscreen that will lead them
+    //to the login screen.
     private void resetPassword() {
         String emailEntered = email.getEditText().getText().toString().trim();
 
