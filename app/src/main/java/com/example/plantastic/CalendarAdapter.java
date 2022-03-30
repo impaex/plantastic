@@ -42,6 +42,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
         return new CalendarViewHolder(view, onItemListener, days);
     }
 
+    // Code responsible for setting the colors of the individual date cells in the view.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
@@ -49,6 +50,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
 
+        // TODO: Here, instead of coloring the day in the monthly view, clicking makes you go to the daily view.
         if(date.equals(CalendarUtils.selectedDate)) {
             holder.parentView.setBackgroundColor(Color.LTGRAY);
         }

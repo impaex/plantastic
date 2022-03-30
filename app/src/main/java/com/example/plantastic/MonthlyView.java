@@ -55,12 +55,14 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
     private String onlineUserID;
 
 
+    // Function to initialize the view once it's opened.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_monthly_view);
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -90,6 +92,9 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 
     }
 
+    // Since the monthly view is the first view, the event loading logic is placed here.
+    // This only runs if the eventlist is empty.
+    // This pulls the events from the firebase realtime database and adds them to the local eventlist.
     private void retrieveEvents() {
 
         mAuth = FirebaseAuth.getInstance();
@@ -145,7 +150,7 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 
     }
 
-
+    // This function is responsible for loading in the monthly view as a whole.
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
@@ -157,25 +162,27 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
-
-
+    // This function initializes the widgets.
     private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
     }
 
+    // Button function to go one month back.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousMonthAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
         setMonthView();
     }
 
+    // Button function to go one month forward.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextMonthAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
         setMonthView();
     }
 
+    // The function for when you click on a date.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(int position, LocalDate date) {
@@ -189,6 +196,9 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
         startActivity(new Intent(this, WeeklyViewActivity.class));
     }
 
+    // Whenever the back button is pressed within the app, only toggles the drawer.
+    // This is here to prevent you to go back to the login screen and logging yourself out.
+    // TODO: When coming from any other view, make the back button behave normally.
     @Override
     public void onBackPressed() {
 
@@ -198,6 +208,7 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 
     }
 
+    // This is the drawer click logic.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
