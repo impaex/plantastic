@@ -50,7 +50,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
 
-        // TODO: Here, instead of coloring the day in the monthly view, clicking makes you go to the daily view.
         if(date.equals(CalendarUtils.selectedDate)) {
             holder.parentView.setBackgroundColor(Color.LTGRAY);
         }

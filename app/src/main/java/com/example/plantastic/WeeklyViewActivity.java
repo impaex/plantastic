@@ -74,11 +74,7 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
         setEventAdapater();
-
     }
-
-
-
 
     private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
@@ -86,18 +82,21 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         eventListView = findViewById(R.id.eventListView);
     }
 
+    // Sets view to a week before.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousWeekAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
         setWeekView();
     }
 
+    // Sets view to a week after.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextWeekAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusWeeks(1);
         setWeekView();
     }
 
+    // Selects whatever day you clicked on.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(int position, LocalDate date) {
@@ -121,10 +120,12 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         startActivity(new Intent(this, EventEditActivity.class));
     }
 
+
     public void dailyAction(View view) {
         startActivity(new Intent(this, DailyViewActivity.class));
     }
 
+    // Logic behind the drawer.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 

@@ -188,7 +188,7 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
     public void onItemClick(int position, LocalDate date) {
         if (date != null) {
             CalendarUtils.selectedDate = date;
-            setMonthView();
+            startActivity(new Intent(this, DailyViewActivity.class));
         }
     }
 
