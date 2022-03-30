@@ -12,55 +12,56 @@
     tools:context=".DailyViewActivity">
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/nav_view"
+        android:layout_gravity="start"
         app:headerLayout="@layout/header"
         app:menu="@menu/main_menu"
-        android:layout_gravity="start"
 
-        />
+        >
+
+    </com.google.android.material.navigation.NavigationView>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:orientation="vertical">
 
         <include
             android:id="@+id/tool"
-            layout = "@layout/toolbar"/>
+            layout="@layout/toolbar" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/back"
                 android:onClick="previousDayAction"
+                android:text="@string/back"
                 android:textColor="@color/black"
-                app:backgroundTint="#FFFFFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textSize="20sp">
+                app:backgroundTint="#FFFFFF">
 
             </Button>
 
             <TextView
                 android:id="@+id/monthDayText"
                 android:layout_width="0dp"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:text="Mar 2022"
-                android:textSize="20sp"
                 android:layout_gravity="center"
+                android:layout_weight="2"
+                android:text="Mar 2022"
                 android:textAlignment="center"
-                android:textColor="@color/black">
+                android:textColor="@color/black"
+                android:textSize="20sp">
 
             </TextView>
 
@@ -68,12 +69,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/front"
                 android:onClick="nextDayAction"
+                android:text="@string/front"
                 android:textColor="@color/black"
-                app:backgroundTint="#FFFFFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textSize="20sp">
+                app:backgroundTint="#FFFFFF">
 
             </Button>
 
@@ -84,12 +85,12 @@
             android:id="@+id/dayOfWeekView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Monday"
             android:layout_marginBottom="20dp"
-            android:textColor="@color/gray"
-            android:textAlignment="center"
             android:gravity="center"
-            android:textSize="18sp"/>
+            android:text="Monday"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -99,7 +100,7 @@
             android:text="New Event"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/hourListView"
@@ -109,4 +110,5 @@
 
 
     </LinearLayout>
+
 </androidx.drawerlayout.widget.DrawerLayout>
