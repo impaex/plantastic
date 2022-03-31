@@ -304,7 +304,6 @@ public class EventEditActivity  extends AppCompatActivity {
                 }
             }
         });
-        Toast.makeText(EventEditActivity.this, startDate + " " + endDate + " " + startTime + " " + endTime, Toast.LENGTH_LONG).show();
         LocalDate startD = LocalDate.parse(startDate);
         LocalDate endD = LocalDate.parse(endDate);
         LocalTime startT = LocalTime.parse(startTime);
