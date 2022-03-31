@@ -183,7 +183,7 @@ public class EventEditActivity  extends AppCompatActivity {
 
                 startDate = year + "-" + startMonthString + "-" + startDayString;
                 System.out.println(startDate);
-                eventStartDateBTN.setText("Date: " + date);
+                eventStartDateBTN.setText(date);
             }
         };
 
@@ -221,7 +221,7 @@ public class EventEditActivity  extends AppCompatActivity {
                 }
 
                 endDate = year + "-" + endMonthString + "-" + endDayString;
-                eventEndDateBTN.setText("Date: " + date);
+                eventEndDateBTN.setText(date);
 
 
             }
@@ -325,7 +325,7 @@ public class EventEditActivity  extends AppCompatActivity {
                 else{
                     minuteString =  "" + startMinute;
                 }
-                eventStartTimeBTN.setText("Time: " + hourString + ":" + minuteString);
+                eventStartTimeBTN.setText(hourString + ":" + minuteString);
             }
         };
 
@@ -358,7 +358,7 @@ public class EventEditActivity  extends AppCompatActivity {
                 else{
                     targetMinuteString =  "" + endMinute;
                 }
-                eventEndTimeBTN.setText("Time: " + targetHourString + ":" + targetMinuteString);
+                eventEndTimeBTN.setText(targetHourString + ":" + targetMinuteString);
             }
         };
 
