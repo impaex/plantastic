@@ -70,27 +70,25 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    //Brings the user to the login activity
     private void login() {
         Intent loginIntent = new Intent(Register.this, Login.class);
         startActivity(loginIntent);
     }
 
+    //Brings the user to the forgot password activity, where they can reset their password
     private void openResetPassword() {
         Intent resetPasswordIntent = new Intent(Register.this, forgotpassword.class);
         startActivity(resetPasswordIntent);
     }
 
+    //Checks whether user entered a first name
     private Boolean checkFirstName(){
         String val = firstname.getEditText().getText().toString();
-        String whiteSpace = "(?=\\s+$)";
         if (val.isEmpty()){
             firstname.setError("Field can't be empty");
             return false;
         }
-//        else if (!val.matches(whiteSpace)){
-//            firstname.setError("No white spaces allowed");
-//            return false;
-//        }
         else{
             firstname.setError(null);
             firstname.setErrorEnabled(false);
@@ -98,6 +96,7 @@ public class Register extends AppCompatActivity {
         }
     }
 
+    //Checks whether the user entered a last name
     private Boolean checkLastName(){
         String val = lastname.getEditText().getText().toString();
 
@@ -113,6 +112,10 @@ public class Register extends AppCompatActivity {
 
     }
 
+    //The function checks the email you entered in the textbox. It checks if:
+    //* The textbox is not empty
+    //* The textbox has an email that follows a valid e-mail pattern.
+    //It returns true if it follows both rules.
     private Boolean checkEmail(){
 
         String val = email.getEditText().getText().toString();
@@ -132,11 +135,15 @@ public class Register extends AppCompatActivity {
 
     }
 
+    //Checks the passwords that were entered while registering:
+    //* It is not empty
+    //* Both password are equal
+    //* Password have a length of bigger than 4
+    //The function returns true if you've entered a password.
     private Boolean checkPassword(){
 
         String val1 = password1.getEditText().getText().toString();
         String val2 = password2.getEditText().getText().toString();
-        String passwordCheck = "^" + "?=.*[a-zA-Z]" +  "$";
 
         if (!val2.equals(val1)){
             password1.setError("Password are not equal");
@@ -155,10 +162,6 @@ public class Register extends AppCompatActivity {
             password1.setError("Password needs a length of at least 6");
             return false;
         }
-//        else if(!val1.matches(passwordCheck)){
-//            password1.setError("At least one special character");
-//            return false;
-//        }
         else{
             password1.setError(null);
             password2.setError(null);
@@ -169,25 +172,21 @@ public class Register extends AppCompatActivity {
 
     }
 
-
+    //After checking whether all data was entered in correctly, this function will store the
+    //login information in the Firebase database, after which it will redirect you to the login
+    //activity, where the user will be able to login.
     private void register() {
 
         if (!checkFirstName() | !checkLastName() | !checkEmail() | !checkPassword()){
             return;
         }
 
-//        rootNode = FirebaseDatabase.getInstance();
-//        databaseReference = rootNode.getReference("users");
-
         String firstnameString = firstname.getEditText().getText().toString().trim();
         String lastnameString = lastname.getEditText().getText().toString();
         String emailString = email.getEditText().getText().toString().trim();
         String password1String = password1.getEditText().getText().toString();
-        String password2String = password2.getEditText().getText().toString();
 
         registerHelperClass helperClass = new registerHelperClass(firstnameString, lastnameString, emailString, password1String);
-
-//        databaseReference.child(usernameString).setValue(helperClass);
 
         mAuth.createUserWithEmailAndPassword(emailString, password1String).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

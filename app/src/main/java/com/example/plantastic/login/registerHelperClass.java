@@ -1,5 +1,10 @@
 package com.example.plantastic.login;
 
+/*
+ * This is a class that holds the register information of a user,
+ * it is used to add the user to the Firebase database.
+ */
+
 public class registerHelperClass {
 
     String firstname, lastname, email, password;

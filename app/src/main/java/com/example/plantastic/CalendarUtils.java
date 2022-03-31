@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class CalendarUtils {
     public static LocalDate selectedDate;
 
+    // This function returns the days in the month for month x.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<LocalDate> daysInMonthArray(){
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
@@ -44,17 +45,20 @@ public class CalendarUtils {
 
     }
 
+    // Converter method.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String monthYearFromDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         return date.format(formatter);
     }
 
+    // Converter method.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String monthDayFromDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d");
         return date.format(formatter);
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate selectedDate) {

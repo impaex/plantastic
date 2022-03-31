@@ -22,9 +22,6 @@
             android:name=".login.passwordForgetSplash"
             android:exported="false" />
         <activity
-            android:name=".login.setNewPassword"
-            android:exported="false" />
-        <activity
             android:name=".login.forgotpassword"
             android:exported="false" />
         <activity

@@ -25,8 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
-    private static final String FILE_NAME = "myFile";
-    private Button register, login, forgot;
+
+   private static final String FILE_NAME = "myFile";
+   private Button register, login, forgot;
    private TextInputLayout email, password;
    private TextInputEditText emailEdit, passwordEdit;
    private CheckBox rememberMe;
@@ -51,7 +52,6 @@ public class Login extends AppCompatActivity {
 
         setLoginInfo();
 
-
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { openResetPassword(); }
@@ -73,6 +73,8 @@ public class Login extends AppCompatActivity {
 
     }
 
+    //This function checks whether you've ever checked the 'Remember me' checkbox while logging in
+    //and retrieves this information the next time you login.
     private void setLoginInfo() {
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE);
         String emailShared = sharedPreferences.getString("email", "");
@@ -83,18 +85,23 @@ public class Login extends AppCompatActivity {
 
     }
 
+    //Opens the activity where you can request a new password
     private void openResetPassword() {
         Intent resetPasswordIntent = new Intent(Login.this, forgotpassword.class);
         startActivity(resetPasswordIntent);
     }
 
+    //Opens the activity where you can register
     void openRegister() {
         Intent registerIntent = new Intent(Login.this, Register.class);
         startActivity(registerIntent);
     }
 
+    //The function checks  the email you entered in the textbox. It checks if:
+    //* The textbox is not empty
+    //* The textbox has an email that follows a valid e-mail pattern.
+    //It returns true if it follows both rules.
     private Boolean validateEmail(){
-
         String val = email.getEditText().getText().toString();
         if (val.isEmpty()){
             email.setError("Field can't be empty");
@@ -111,6 +118,9 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    //The function checks the password you entered in the textbox. It checks if:
+    //* It is not empty
+    //The function returns true if you've entered a password.
     private Boolean validatePassword(){
 
         String val = password.getEditText().getText().toString();
@@ -124,6 +134,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    //Calls two methods to validate login information before proceeding to login.
     public void loginUser(){
         //Validate Login Info
         if (!validateEmail() | !validatePassword()){
@@ -135,6 +146,9 @@ public class Login extends AppCompatActivity {
 
     }
 
+    //Checks the Firebase authentication database and validates whether the email and password
+    //entered where valid, and it opens the calendar activity if it was. Otherwise it will
+    //notify you what went wrong.
     private void doesUserExist() {
 
         String emailEntered = email.getEditText().getText().toString().trim();
@@ -168,6 +182,8 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    //Stores the login information (Email, password), so that the user doesn't have to full that in
+    //the next time they try to login.
     private void StoredDataUsingSharedPref(String email, String password) {
 
         SharedPreferences.Editor editor = getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
@@ -176,6 +192,8 @@ public class Login extends AppCompatActivity {
         editor.apply();
     }
 
+    //Overrides the ability of pressing the back bottom of the phone when on the login screen,
+    //since it would otherwise return to the splashscreen.
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);

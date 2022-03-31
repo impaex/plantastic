@@ -22,7 +22,7 @@ public class passwordForgetSplash extends AppCompatActivity {
     private static int SPLASH_SCREEN = 1500;
 
 
-
+    //Splashscreen redirects the user to the login screen after 1,5 seconds have passed.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
