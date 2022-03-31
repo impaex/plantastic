@@ -100,23 +100,26 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
         return list;
     }
 
+    // previous day button
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusDays(1);
         setDayView();
     }
 
+    // Next day button
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusDays(1);
         setDayView();
     }
 
+    // new event button
     public void newEventAction(View view) {
         startActivity(new Intent(this, EventEditActivity.class));
     }
 
-
+    // Logic for the drawer.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
