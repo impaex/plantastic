@@ -2,6 +2,7 @@ package com.example.plantastic;
 
 import static com.example.plantastic.CalendarUtils.daysInMonthArray;
 import static com.example.plantastic.CalendarUtils.monthYearFromDate;
+import static com.example.plantastic.CalendarUtils.selectedDate;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -79,17 +80,14 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 
         navigationView.setCheckedItem(R.id.nav_monthly);
 
-        initWidgets();
-        CalendarUtils.selectedDate = LocalDate.now();
-        setMonthView();
-
         //Retrieving Events from database
         if (Event.eventsList.size() == 0) {
             retrieveEvents();
         }
 
-
-
+        initWidgets();
+        CalendarUtils.selectedDate = LocalDate.now();
+        setMonthView();
     }
 
     // Since the monthly view is the first view, the event loading logic is placed here.
