@@ -158,9 +158,9 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    //averageHelper avg = snapshot.getValue(averageHelper.class);
-                    //Average avg2 = new Average(avg.getId(), avg.getSum(), avg.getCount(), avg.getName());
-                    //Average.averages.add(avg2);
+                    averageHelper avg = snapshot.getValue(averageHelper.class);
+                    Average avg2 = new Average(avg.getId(), avg.getSum(), avg.getCount(), avg.getName());
+                    Average.averages.add(avg2);
                 }
             }
 
