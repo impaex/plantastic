@@ -38,7 +38,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
 
         }
 
-
         return new CalendarViewHolder(view, onItemListener, days);
     }
 
@@ -49,6 +48,44 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
         final LocalDate date = days.get(position);
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
+
+        // This code gets all the events for the current date.
+        ArrayList<Event> eventsToday = Event.eventsForDate(date);
+
+        // Set all fields invisible first, and make visible in the if statements.
+        holder.event1.setVisibility(View.INVISIBLE);
+        holder.event2.setVisibility(View.INVISIBLE);
+        holder.event3.setVisibility(View.INVISIBLE);
+
+        // Ugly code, but we're in a hurry since we started too late so please just deal with it.
+        System.out.println(eventsToday.size() + " events here");
+        if (eventsToday.size() > 0) {
+            if (eventsToday.size() == 1) {
+                holder.event1.setText(eventsToday.get(0).getName());
+                holder.event1.setVisibility(View.VISIBLE);
+            }
+            else if (eventsToday.size() == 2) {
+                holder.event1.setText(eventsToday.get(0).getName());
+                holder.event2.setText(eventsToday.get(1).getName());
+                holder.event1.setVisibility(View.VISIBLE);
+                holder.event2.setVisibility(View.VISIBLE);
+            }
+            else if (eventsToday.size() >= 3) {
+                holder.event1.setText(eventsToday.get(0).getName());
+                holder.event2.setText(eventsToday.get(1).getName());
+                if (eventsToday.size() > 3) {
+                    holder.event3.setText((eventsToday.size() - 2) + " more");
+                    holder.event3.setBackgroundColor(Color.GRAY);
+                }
+                else {
+                    holder.event3.setText(eventsToday.get(2).getName());
+                }
+                holder.event1.setVisibility(View.VISIBLE);
+                holder.event2.setVisibility(View.VISIBLE);
+                holder.event3.setVisibility(View.VISIBLE);
+            }
+        }
+
 
         if(date.equals(CalendarUtils.selectedDate)) {
             holder.parentView.setBackgroundColor(Color.LTGRAY);
