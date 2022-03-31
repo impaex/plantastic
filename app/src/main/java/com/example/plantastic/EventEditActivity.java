@@ -22,11 +22,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -57,6 +62,7 @@ public class EventEditActivity  extends AppCompatActivity {
     private LocalTime timeNow;
 
     private DatabaseReference reference;
+    private DatabaseReference average;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private String onlineUserID;
@@ -84,6 +90,8 @@ public class EventEditActivity  extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         onlineUserID = mUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
+        average = FirebaseDatabase.getInstance().getReference().child("average");
+
 
     }
 
@@ -296,6 +304,25 @@ public class EventEditActivity  extends AppCompatActivity {
                 }
             }
         });
+        Toast.makeText(EventEditActivity.this, startDate + " " + endDate + " " + startTime + " " + endTime, Toast.LENGTH_LONG).show();
+        LocalDate startD = LocalDate.parse(startDate);
+        LocalDate endD = LocalDate.parse(endDate);
+        LocalTime startT = LocalTime.parse(startTime);
+        LocalTime endT = LocalTime.parse(endTime);
+        LocalDateTime start = startD.atTime(startT);
+        LocalDateTime end = endD.atTime(endT);
+        long updateSum = Duration.between(start, end).toMinutes();
+        Average avg = Average.getAverage(eventName);
+        if (avg != null) {
+            avg.update(updateSum);
+            average.child(avg.getId()).setValue(avg);
+        } else {
+            String id2 = average.push().getKey();
+            Average avg2 = new Average(id2, eventName);
+            avg2.update(updateSum);
+            Average.averages.add(avg2);
+            average.child(id2).setValue(avg2);
+        }
 
         Event newEvent = new Event(eventName, localDate, localTime);
         Event.eventsList.add(newEvent);

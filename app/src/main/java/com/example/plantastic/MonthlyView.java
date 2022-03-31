@@ -86,7 +86,9 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
             retrieveEvents();
         }
 
-
+        if (Average.averages.size() == 0) {
+            retrieveAverage();
+        }
 
     }
 
@@ -143,6 +145,24 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 //            }
 //        });
 
+    }
+
+    private void retrieveAverage() {
+        FirebaseDatabase.getInstance().getReference().child("average").addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Average avg = snapshot.getValue(Average.class);
+                    Average.averages.add(avg);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
