@@ -99,7 +99,7 @@
             android:onClick="newEventAction"
             android:text="New Event"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <ListView
