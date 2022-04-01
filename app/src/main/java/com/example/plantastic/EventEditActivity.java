@@ -78,8 +78,8 @@ public class EventEditActivity  extends AppCompatActivity {
         timeNow = LocalTime.now();
 
         // Sets the date buttons to the current day.
-        eventStartDateBTN.setText("Date: " + getTodaysDate());
-        eventEndDateBTN.setText("Date: " + getTodaysDate());
+        eventStartDateBTN.setText(getTodaysDate());
+        eventEndDateBTN.setText(getTodaysDate());
 
         startHour = -1;
 
@@ -130,8 +130,8 @@ public class EventEditActivity  extends AppCompatActivity {
         }
 
         // Set time buttons to the current time, and current time + 1 hour.
-        eventStartTimeBTN.setText("Time: " + hourString + ":" + minuteString);
-        eventEndTimeBTN.setText("Time: " + targetHourString +  ":" + targetMinuteString);
+        eventStartTimeBTN.setText(hourString + ":" + minuteString);
+        eventEndTimeBTN.setText(targetHourString +  ":" + targetMinuteString);
     }
 
     // Function to prettify todays date and return it.
@@ -144,18 +144,24 @@ public class EventEditActivity  extends AppCompatActivity {
 
         if(month < 10){
             startMonthString = "0" + month;
+            endMonthString = "0" + month;
         }
         else{
             startMonthString = "" + month;
+            endMonthString = "" + month;
         }
         if(day < 10){
             startDayString = "0" + day;
+            endDayString = "0" + day;
         }
         else{
             startDayString = "" + day;
+            endDayString = "" + day;
         }
 
+        // Here we set the initial values of the  start and end dates.
         startDate = year + "-" + startMonthString + "-" + startDayString;
+        endDate = year + "-"  + endMonthString + "-" + endDayString;
         return makeDateString(day, month, year);
     }
 
