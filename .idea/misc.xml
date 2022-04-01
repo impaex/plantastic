@@ -35,9 +35,8 @@
         <entry key="..\:/Users/20202991/Dropbox/My PC (S20202991)/Desktop/AndroidAppDevelopment/plantastic/app/src/main/res/layout/activity_task_edit.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20202991/Dropbox/My PC (S20202991)/Desktop/AndroidAppDevelopment/plantastic/app/src/main/res/layout/event_cell.xml" value="0.15896739130434784" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/Plantastic/app/src/main/res/layout/activity_main.xml" value="0.3729166666666667" />
-
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout-land/activity_daily_view.xml" value="0.2191358024691358" />
-        <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout-land/activity_event_edit.xml" value="0.19527027027027027" />
+        <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout-land/activity_event_edit.xml" value="0.25" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout-land/activity_monthly_view.xml" value="0.20675675675675675" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout-land/activity_weekly_view.xml" value="0.20675675675675675" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/activity_daily_view.xml" value="0.30842391304347827" />
@@ -63,7 +62,6 @@
         <entry key="app/src/main/res/layout/event_cell.xml" value="0.20643363728470113" />
         <entry key="app/src/main/res/layout/header.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/layout/hour_cell.xml" value="0.20643363728470113" />
-
       </map>
     </option>
   </component>
