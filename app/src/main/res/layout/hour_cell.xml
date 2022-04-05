@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:id="@+id/event1"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:lines="2"
             android:text="Event 1" />
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:id="@+id/event2"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:lines="2"
             android:text="Event 2" />
@@ -49,7 +49,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:id="@+id/event3"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:lines="2"
             android:text="Event 3" />
