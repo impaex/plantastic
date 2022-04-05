@@ -2,7 +2,7 @@ package com.example.plantastic;
 
 public class eventHelper {
 
-    private String name, startDate, endDate, startTime, endTime, id;
+    private String name, startDate, endDate, startTime, endTime, id, taskId;
 
     public eventHelper(){
 
@@ -15,6 +15,16 @@ public class eventHelper {
         this.startTime = startTime;
         this.endTime = endTime;
         this.id = id;
+    }
+
+    public eventHelper(String id, String taskId, String name, String startDate, String endDate, String startTime, String endTime) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.id = id;
+        this.taskId = taskId;
     }
 
     public String getName() {
@@ -31,6 +41,14 @@ public class eventHelper {
 
     public void setId(String name) {
         this.id = id;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String name) {
+        this.taskId = taskId;
     }
 
     public String getStartDate() {

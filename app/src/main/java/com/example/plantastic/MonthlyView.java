@@ -111,11 +111,14 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
                     eventHelper event = snapshot.getValue(eventHelper.class);
 
                     String name = event.getName();
+                    String taskId = event.getTaskId();
                     LocalDate localDate = LocalDate.parse(event.getStartDate());
                     LocalTime localTime = LocalTime.parse(event.getStartTime());
+                    LocalDate endDate = LocalDate.parse(event.getEndDate());
+                    LocalTime endTime = LocalTime.parse(event.getEndTime());
 
 
-                    Event newEvent = new Event(name, localDate, localTime);
+                    Event newEvent = new Event(name, taskId, localDate, localTime, endDate, endTime);
                     Event.eventsList.add(newEvent);
                 }
             }

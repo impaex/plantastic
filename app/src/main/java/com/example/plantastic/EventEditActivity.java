@@ -329,7 +329,7 @@ public class EventEditActivity  extends AppCompatActivity {
             average.child(id2).setValue(avg2);
         }
 
-        Event newEvent = new Event(eventName, localDate, localTime);
+        Event newEvent = new Event(eventName, null, localDate, localTime, endD, endT);
         Event.eventsList.add(newEvent);
         finish();
 

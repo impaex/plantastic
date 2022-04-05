@@ -42,14 +42,20 @@ public class Event {
     }
 
     private String name;
+    private String taskId;
     private LocalDate date;
     private LocalTime time;
+    private LocalDate dateEnd;
+    private LocalTime timeEnd;
 
-    public Event(String name, LocalDate date, LocalTime time) {
+    public Event(String name, String taskId, LocalDate date, LocalTime time, LocalDate dateEnd, LocalTime timeEnd) {
 
         this.name = name;
+        this.taskId = taskId;
         this.date = date;
         this.time = time;
+        this.dateEnd = dateEnd;
+        this.timeEnd = timeEnd;
     }
 
     public String getName() {
@@ -74,5 +80,21 @@ public class Event {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public LocalTime getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(LocalTime timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }
