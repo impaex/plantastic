@@ -45,17 +45,17 @@ public class Event {
     private String taskId;
     private LocalDate date;
     private LocalTime time;
-    private LocalDate dateEnd;
-    private LocalTime timeEnd;
+    private LocalDate endDate;
+    private LocalTime endTime;
 
-    public Event(String name, String taskId, LocalDate date, LocalTime time, LocalDate dateEnd, LocalTime timeEnd) {
+    public Event(String name, String taskId, LocalDate date, LocalTime time, LocalDate endDate, LocalTime endTime) {
 
         this.name = name;
         this.taskId = taskId;
         this.date = date;
         this.time = time;
-        this.dateEnd = dateEnd;
-        this.timeEnd = timeEnd;
+        this.endDate = endDate;
+        this.endTime = endTime;
     }
 
     public String getName() {
@@ -83,18 +83,18 @@ public class Event {
     }
 
     public LocalDate getDateEnd() {
-        return dateEnd;
+        return endDate;
     }
 
     public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
+        this.endDate = dateEnd;
     }
 
     public LocalTime getTimeEnd() {
-        return timeEnd;
+        return endTime;
     }
 
     public void setTimeEnd(LocalTime timeEnd) {
-        this.timeEnd = timeEnd;
+        this.endTime = timeEnd;
     }
 }
