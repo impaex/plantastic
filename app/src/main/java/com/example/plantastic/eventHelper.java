@@ -4,7 +4,7 @@ public class eventHelper {
 
     private String name, startDate, endDate, startTime, endTime, id, taskId;
 
-    public eventHelper(){
+    public eventHelper() {
 
     }
 
@@ -17,6 +17,7 @@ public class eventHelper {
         this.id = id;
     }
 
+    // Main constructor
     public eventHelper(String id, String taskId, String name, String startDate, String endDate, String startTime, String endTime) {
         this.name = name;
         this.startDate = startDate;
@@ -64,7 +65,7 @@ public class eventHelper {
     }
 
     public void setEndDate(String date) {
-        this.endTime = date;
+        this.endDate = date;
     }
 
     public String getStartTime() {
