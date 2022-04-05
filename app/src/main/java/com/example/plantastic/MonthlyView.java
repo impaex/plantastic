@@ -112,13 +112,12 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 
                     String name = event.getName();
                     String taskId = event.getTaskId();
-                    LocalDate localDate = LocalDate.parse(event.getStartDate());
-                    LocalTime localTime = LocalTime.parse(event.getStartTime());
+                    LocalDate startDate = LocalDate.parse(event.getStartDate());
+                    LocalTime startTime = LocalTime.parse(event.getStartTime());
                     LocalDate endDate = LocalDate.parse(event.getEndDate());
                     LocalTime endTime = LocalTime.parse(event.getEndTime());
 
-
-                    Event newEvent = new Event(name, taskId, localDate, localTime, endDate, endTime);
+                    Event newEvent = new Event(name, taskId, startDate, startTime, endDate, endTime);
                     Event.eventsList.add(newEvent);
                 }
             }
@@ -129,8 +128,6 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
             }
         });
 
-
-//
 //        reference = FirebaseDatabase.getInstance().getReference("tasks");
 //        reference.child(onlineUserID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 //            @Override
