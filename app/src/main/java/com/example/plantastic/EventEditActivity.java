@@ -113,10 +113,10 @@ public class EventEditActivity  extends AppCompatActivity {
 
         // Convert the target hour in a nice string.
         if(targetHour < 10) {
-            targetHourString =  "0" + timeNow.getHour();
+            targetHourString =  "0" + targetHour;
         }
         else {
-            targetHourString =  "" + timeNow.getHour();
+            targetHourString =  "" + targetHour;
         }
 
         // Convert the current minute in a nice string.
