@@ -120,7 +120,7 @@
                 android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:onClick=""
+                android:onClick="newTaskAction"
                 android:text="New Task"
                 android:textColor="@color/white"
                 android:textSize="15sp"

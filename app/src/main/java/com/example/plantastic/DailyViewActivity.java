@@ -119,6 +119,11 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
         startActivity(new Intent(this, EventEditActivity.class));
     }
 
+    // New task button
+    public void newTaskAction(View view) {
+        startActivity(new Intent(this, taskEditActivity.class));
+    }
+
     // Logic for the drawer.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
