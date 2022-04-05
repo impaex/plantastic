@@ -58,7 +58,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
         holder.event3.setVisibility(View.INVISIBLE);
 
         // Ugly code, but we're in a hurry since we started too late so please just deal with it.
-        System.out.println(eventsToday.size() + " events here");
         if (eventsToday.size() > 0) {
             if (eventsToday.size() == 1) {
                 holder.event1.setText(eventsToday.get(0).getName());
