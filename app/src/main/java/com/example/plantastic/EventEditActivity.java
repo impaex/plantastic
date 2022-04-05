@@ -291,15 +291,23 @@ public class EventEditActivity  extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveEventAction(View view){
-        String eventName = eventNameET.getText().toString();
-        LocalDate localDate = LocalDate.parse(startDate);
-        LocalTime localTime = LocalTime.parse(hourString+":"+minuteString+ ":00");
-
         String id = reference.push().getKey();
         String startTime = hourString + ":" + minuteString;
         String endTime = targetHourString + ":" + targetMinuteString;
 
-        eventHelper eventHelper = new eventHelper(id, eventName, startDate, endDate, startTime, endTime);
+        String eventName = eventNameET.getText().toString();
+
+        // Get the times and dates in a local object.
+        LocalDate localStartDate = LocalDate.parse(startDate);
+        LocalDate localEndDate = LocalDate.parse(startDate);
+        LocalTime localStartTime = LocalTime.parse(hourString+":"+minuteString+ ":00");
+        LocalTime localEndTime = LocalTime.parse(targetHourString+":"+targetMinuteString+ ":00");
+
+
+        // TODO: taskID is now prefilled, should be connected to the selected task in interface.
+        String taskID = "test";
+
+        eventHelper eventHelper = new eventHelper(id, taskID, eventName, startDate, endDate, startTime, endTime);
         reference.child(id).setValue(eventHelper).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -310,10 +318,13 @@ public class EventEditActivity  extends AppCompatActivity {
                 }
             }
         });
-        LocalDate startD = LocalDate.parse(startDate);
-        LocalDate endD = LocalDate.parse(endDate);
-        LocalTime startT = LocalTime.parse(startTime);
-        LocalTime endT = LocalTime.parse(endTime);
+
+        // average stuff
+        LocalDate startD = localStartDate;
+        LocalDate endD = localEndDate;
+        LocalTime startT = localStartTime;
+        LocalTime endT = localEndTime;
+
         LocalDateTime start = startD.atTime(startT);
         LocalDateTime end = endD.atTime(endT);
         long updateSum = Duration.between(start, end).toMinutes();
@@ -329,7 +340,8 @@ public class EventEditActivity  extends AppCompatActivity {
             average.child(id2).setValue(avg2);
         }
 
-        Event newEvent = new Event(eventName, null, localDate, localTime, endD, endT);
+
+        Event newEvent = new Event(eventName, taskID, localStartDate, localStartTime, localEndDate, localEndTime);
         Event.eventsList.add(newEvent);
         finish();
 
