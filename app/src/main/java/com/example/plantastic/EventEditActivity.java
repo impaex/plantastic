@@ -89,7 +89,7 @@ public class EventEditActivity  extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         onlineUserID = mUser.getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
+        reference = FirebaseDatabase.getInstance().getReference().child("events").child(onlineUserID);
         average = FirebaseDatabase.getInstance().getReference().child("average");
 
 
