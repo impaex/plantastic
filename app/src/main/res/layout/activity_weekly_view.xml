@@ -220,7 +220,7 @@
                 android:textSize="15sp"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:onClick=""
+                android:onClick="newTaskAction"
                 android:text="New Task" />
 
             <Space

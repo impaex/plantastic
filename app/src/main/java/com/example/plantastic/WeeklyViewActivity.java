@@ -116,8 +116,14 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         eventListView.setAdapter(eventAdapter);
     }
 
+    // New event button
     public void newEventAction(View view) {
         startActivity(new Intent(this, EventEditActivity.class));
+    }
+
+    // New task button
+    public void newTaskAction(View view) {
+        startActivity(new Intent(this, taskEditActivity.class));
     }
 
 
