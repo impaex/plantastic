@@ -122,9 +122,9 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
     }
 
     // New task button
-//    public void newTaskAction(View view) {
-//        startActivity(new Intent(this, taskEditActivity.class));
-//    }
+    public void newTaskAction(View view) {
+        startActivity(new Intent(this, taskEditActivity.class));
+    }
 
 
     public void dailyAction(View view) {
