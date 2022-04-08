@@ -16,6 +16,9 @@
             android:name=".EventEditActivity"
             android:exported="false" />
         <activity
+            android:name=".taskEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".WeeklyViewActivity"
             android:exported="false" />
         <activity
