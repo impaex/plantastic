@@ -31,22 +31,5 @@ public class MainActivity extends AppCompatActivity {
         EditText notesTask = findViewById(R.id.notesTask);
         Button btn = findViewById(R.id.addBtn);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rootNode = FirebaseDatabase.getInstance();
-                databaseReference = rootNode.getReference("tasks");
-
-                String name = nameTask.getText().toString();
-                String desc = descTask.getText().toString();
-                String notes = notesTask.getText().toString();
-
-
-                TaskHelperClass helperClass = new TaskHelperClass(name, desc, notes);
-
-                databaseReference.push().setValue(helperClass);
-            }
-        });
-
     }
 }
