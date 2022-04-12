@@ -34,7 +34,7 @@ public class EventEditActivity  extends AppCompatActivity {
 
     // The variables for the buttons and dialogs.
     private EditText eventNameET, eventLocationET, eventNoteET;
-    private Button eventStartDateBTN, eventStartTimeBTN, eventEndDateBTN, eventEndTimeBTN;
+    private Button eventStartDateBTN, eventStartTimeBTN, eventEndDateBTN, eventEndTimeBTN, saveButton;
     private CheckBox allDay;
     DatePickerDialog startDatePickerDialog;
     DatePickerDialog endDatePickerDialog;
@@ -68,6 +68,7 @@ public class EventEditActivity  extends AppCompatActivity {
         allDay = findViewById(R.id.allDayCheckBox);
         eventLocationET = findViewById(R.id.eventLocationET);
         eventNoteET = findViewById(R.id.eventNoteET);
+        saveButton = findViewById(R.id.saveEvent);
 
         eventStartDateBTN.setText(Formatters.getTodaysDate(false));
         eventEndDateBTN.setText(Formatters.getTodaysDate(false));
@@ -116,6 +117,15 @@ public class EventEditActivity  extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 LocalDate date = LocalDate.of(year, month+1, day);
                 selectedStartDate = date;
+
+                // Check if the from date is not after the until date.
+                if (!dateValidityChecker()) {
+                    saveButton.setEnabled(false);
+                }
+
+                else {
+                    saveButton.setEnabled(true);
+                }
                 eventStartDateBTN.setText(Formatters.getTextDate(date));
             }
         };
@@ -133,6 +143,14 @@ public class EventEditActivity  extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 LocalDate date = LocalDate.of(year, month+1, day);
                 selectedEndDate = date;
+
+                // Check if the until date is not before the from date.
+                if (!dateValidityChecker()) {
+                    saveButton.setEnabled(false);
+                }
+                else {
+                    saveButton.setEnabled(true);
+                }
                 eventEndDateBTN.setText(Formatters.getTextDate(date));
             }
         };
@@ -150,6 +168,15 @@ public class EventEditActivity  extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 LocalTime time = LocalTime.of(selectedHour, selectedMinute);
                 selectedStartTime = time;
+
+                // Check if the selected time is not after the until time. Only if the day is the same.
+                if (!dateValidityChecker()) {
+                    saveButton.setEnabled(false);
+                }
+
+                else {
+                    saveButton.setEnabled(true);
+                }
                 eventStartTimeBTN.setText(Formatters.getTime(time));
             }
         };
@@ -167,6 +194,15 @@ public class EventEditActivity  extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 LocalTime time = LocalTime.of(selectedHour, selectedMinute);
                 selectedEndTime = time;
+
+                // Check if the selected time is not before the from time. Only if the day is the same.
+                if (!dateValidityChecker()) {
+                    saveButton.setEnabled(false);
+                }
+
+                else {
+                    saveButton.setEnabled(true);
+                }
                 eventEndTimeBTN.setText(Formatters.getTime(time));
             }
         };
@@ -272,6 +308,27 @@ public class EventEditActivity  extends AppCompatActivity {
             eventStartTimeBTN.setVisibility(view.VISIBLE);
             eventEndTimeBTN.setVisibility(view.VISIBLE);
         }
+    }
+
+    /**
+     * A function which checks whether the until datetime is defined later in time than the from datetime.
+     * @return true if valid, false if not.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Boolean dateValidityChecker() {
+
+        if (selectedEndDate.isBefore(selectedStartDate)) {
+            Toast.makeText(EventEditActivity.this, "Make sure the 'until' date and time are after the 'from' date and time!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (selectedStartDate.equals(selectedEndDate)) {
+            if (selectedEndTime.isBefore(selectedStartTime)) {
+                Toast.makeText(EventEditActivity.this, "Make sure the 'until' date and time are after the 'from' date and time!", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
