@@ -106,6 +106,7 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
 
                     EventObject.eventsList.add(EventDatabaseObject.convertToEventObject(event));
                 }
+                setMonthView();
             }
 
             @Override

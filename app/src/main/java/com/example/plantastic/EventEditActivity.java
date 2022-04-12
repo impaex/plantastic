@@ -231,7 +231,7 @@ public class EventEditActivity  extends AppCompatActivity {
 
 
         // TODO: taskID is now prefilled, should be connected to the selected task in interface.
-        String taskID = "";
+        String taskID = "None";
 
         EventDatabaseObject EventDatabaseObj = new EventDatabaseObject(eventName, taskID, id, selectedStartDateString, selectedStartTimeString, selectedEndDateString, selectedEndTimeString, eventLocation, eventNotes);
         reference.child(id).setValue(EventDatabaseObj).addOnCompleteListener(new OnCompleteListener<Void>() {

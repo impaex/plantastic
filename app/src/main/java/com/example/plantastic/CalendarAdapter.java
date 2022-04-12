@@ -59,25 +59,44 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
 
         // Ugly code, but we're in a hurry since we started too late so please just deal with it.
         if (eventsToday.size() > 0) {
+            System.out.println(eventsToday.get(0).getTaskId());
             if (eventsToday.size() == 1) {
                 holder.event1.setText(eventsToday.get(0).getName());
+                if (eventsToday.get(0).getTaskId().equals("None")) {
+                    holder.event1.setBackgroundColor(Color.GREEN);
+                }
                 holder.event1.setVisibility(View.VISIBLE);
             }
             else if (eventsToday.size() == 2) {
                 holder.event1.setText(eventsToday.get(0).getName());
+                if (eventsToday.get(0).getTaskId() == "None") {
+                    holder.event1.setBackgroundColor(Color.GREEN);
+                }
                 holder.event2.setText(eventsToday.get(1).getName());
+                if (eventsToday.get(1).getTaskId() == "None") {
+                    holder.event2.setBackgroundColor(Color.GREEN);
+                }
                 holder.event1.setVisibility(View.VISIBLE);
                 holder.event2.setVisibility(View.VISIBLE);
             }
             else if (eventsToday.size() >= 3) {
                 holder.event1.setText(eventsToday.get(0).getName());
+                if (eventsToday.get(0).getTaskId() == "None") {
+                    holder.event1.setBackgroundColor(Color.GREEN);
+                }
                 holder.event2.setText(eventsToday.get(1).getName());
+                if (eventsToday.get(1).getTaskId() == "None") {
+                    holder.event2.setBackgroundColor(Color.GREEN);
+                }
                 if (eventsToday.size() > 3) {
                     holder.event3.setText((eventsToday.size() - 2) + " more");
                     holder.event3.setBackgroundColor(Color.GRAY);
                 }
                 else {
                     holder.event3.setText(eventsToday.get(2).getName());
+                    if (eventsToday.get(2).getTaskId() == "None") {
+                        holder.event3.setBackgroundColor(Color.GREEN);
+                    }
                 }
                 holder.event1.setVisibility(View.VISIBLE);
                 holder.event2.setVisibility(View.VISIBLE);
