@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.Duration;
 
 
 public class EventEditActivity  extends AppCompatActivity {
@@ -208,25 +210,21 @@ public class EventEditActivity  extends AppCompatActivity {
         });
 
         // average stuff
-//        LocalDate startD = localStartDate;
-//        LocalDate endD = localEndDate;
-//        LocalTime startT = localStartTime;
-//        LocalTime endT = localEndTime;
-//
-//        LocalDateTime start = startD.atTime(startT);
-//        LocalDateTime end = endD.atTime(endT);
-//        long updateSum = Duration.between(start, end).toMinutes();
-//        Average avg = Average.getAverage(eventName);
-//        if (avg != null) {
-//            avg.update(updateSum);
-//            average.child(avg.getId()).setValue(avg);
-//        } else {
-//            String id2 = average.push().getKey();
-//            Average avg2 = new Average(id2, eventName);
-//            avg2.update(updateSum);
-//            Average.averages.add(avg2);
-//            average.child(id2).setValue(avg2);
-//        }
+
+        LocalDateTime start = selectedStartDate.atTime(selectedStartTime);
+        LocalDateTime end = selectedEndDate.atTime(selectedEndTime);
+        long updateSum = Duration.between(start, end).toMinutes();
+        Average avg = Average.getAverage(eventName);
+        if (avg != null) {
+            avg.update(updateSum);
+            average.child(avg.getId()).setValue(avg);
+        } else {
+            String id2 = average.push().getKey();
+            Average avg2 = new Average(id2, eventName);
+            avg2.update(updateSum);
+            Average.averages.add(avg2);
+            average.child(id2).setValue(avg2);
+        }
 
 
         EventObject.eventsList.add(EventDatabaseObject.convertToEventObject(EventDatabaseObj));

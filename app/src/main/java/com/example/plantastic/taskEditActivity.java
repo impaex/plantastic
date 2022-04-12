@@ -54,7 +54,6 @@ public class taskEditActivity  extends AppCompatActivity {
 
     // Variables regarding the Firebase database.
     private DatabaseReference reference;
-    private DatabaseReference eventReference;
     private DatabaseReference average;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -101,7 +100,6 @@ public class taskEditActivity  extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         onlineUserID = mUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
-        eventReference = FirebaseDatabase.getInstance().getReference().child("events").child(onlineUserID);
         average = FirebaseDatabase.getInstance().getReference().child("average");
     }
 
@@ -173,21 +171,12 @@ public class taskEditActivity  extends AppCompatActivity {
                 }
             }
         });
-        System.out.println("test");
+
         // autoplan
         if (isChecked) {
-            System.out.println("1");
             LocalDateTime deadline = selectedDate.atTime(selectedTime);
-            ArrayList<Event> planned = AutoPlan.AutoPlan(deadline, taskName, id);
-            System.out.println("2 "+deadline.toString()+" "+planned.size());
-            Event.eventsList.addAll(planned);
+            AutoPlan.AutoPlan(onlineUserID, deadline, taskName, id, taskLocation, taskNotes);
 
-            for (Event event : planned) {
-                String eventId = eventReference.push().getKey();
-                eventHelper eventHelper = new eventHelper(eventId, id, taskName, event.getDate().toString(), event.getDateEnd().toString(), event.getTime().toString(), event.getTimeEnd().toString());
-                eventReference.child(eventId).setValue(eventHelper);
-            }
-            System.out.println("3");
             // average stuff
             Average avg = Average.getAverage(taskName);
             if (avg != null) {

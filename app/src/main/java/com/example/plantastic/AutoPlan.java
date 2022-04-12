@@ -4,6 +4,9 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -14,75 +17,77 @@ import java.util.Comparator;
 
 public class AutoPlan {
 
+    private static DatabaseReference reference;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static ArrayList<EventObject> AutoPlan(LocalDateTime deadline, String name, String taskId) {
+    public static void AutoPlan(String onlineUserID, LocalDateTime deadline, String name, String taskId, String location, String notes) {
+
+        reference = FirebaseDatabase.getInstance().getReference().child("events").child(onlineUserID);
 
         LocalDateTime now = LocalDateTime.now();
 
-        System.out.println("test1 "+now.toString());
         ArrayList<EventObject> events = new ArrayList<>();
         for (EventObject event : EventObject.eventsList) {
-            LocalDateTime start = event.getStartTime().atTime(event.getStartDate());
+            LocalDateTime start = event.getStartDate().atTime(event.getStartTime());
             LocalDateTime end = event.getEndDate().atTime(event.getEndTime());
             if (Duration.between(now, end).toMinutes() > 0 && Duration.between(start, deadline).toMinutes() > 0) {
                 events.add(event);
             }
         }
-        System.out.println("test2 "+events.size());
 
-        Collections.sort(events, new Comparator<Event>() {
+        Collections.sort(events, new Comparator<EventObject>() {
             @Override
-            public int compare(Event e1, Event e2) {
-                if (Duration.between(e1.getDate().atTime(e1.getTime()), e2.getDate().atTime(e2.getTime())).toMinutes() != 0) {
-                    return (int)Duration.between(e1.getDate().atTime(e1.getTime()), e2.getDateEnd().atTime(e2.getTime())).toMinutes();
+            public int compare(EventObject e1, EventObject e2) {
+                if (Duration.between(e1.getStartDate().atTime(e1.getStartTime()), e2.getStartDate().atTime(e2.getStartTime())).toMinutes() != 0) {
+                    return (int)Duration.between(e1.getStartDate().atTime(e1.getStartTime()), e2.getStartDate().atTime(e2.getStartTime())).toMinutes();
                 } else {
-                    return (int)Duration.between(e1.getDateEnd().atTime(e1.getTimeEnd()), e2.getDateEnd().atTime(e2.getTimeEnd())).toMinutes();
+                    return (int)Duration.between(e1.getEndDate().atTime(e1.getEndTime()), e2.getEndDate().atTime(e2.getEndTime())).toMinutes();
                 }
             }
         });
 
         ArrayList<Interval> intervals = new ArrayList<>();
 
-        if (events.size() > 0 && Duration.between(now, events.get(0).getDate().atTime(events.get(0).getTime())).toMinutes() > 0) {
-            int days = (int)Duration.between(now.toLocalDate().atStartOfDay(), events.get(0).getDate().atStartOfDay()).toDays();
+        if (events.size() > 0 && Duration.between(now, events.get(0).getStartDate().atTime(events.get(0).getStartTime())).toMinutes() > 0) {
+            int days = (int)Duration.between(now.toLocalDate().atStartOfDay(), events.get(0).getStartDate().atStartOfDay()).toDays();
             if (days > 0) {
                 intervals.add(new Interval(now.toLocalTime(), LocalTime.MAX, now.toLocalDate()));
                 for (int i = 1; i < days; i++) {
                     intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, now.toLocalDate().plusDays(i)));
                 }
-                intervals.add(new Interval(LocalTime.MIN, events.get(0).getTime(), events.get(0).getDate()));
+                intervals.add(new Interval(LocalTime.MIN, events.get(0).getStartTime(), events.get(0).getStartDate()));
             } else {
-                intervals.add(new Interval(now.toLocalTime(), events.get(0).getTime(), now.toLocalDate()));
+                intervals.add(new Interval(now.toLocalTime(), events.get(0).getStartTime(), now.toLocalDate()));
             }
         }
 
         for (int i = 1; i < events.size(); i++) {
-            Event e1 = events.get(i-1);
-            Event e2 = events.get(i);
-            if (Duration.between(e1.getDateEnd().atTime(e1.getTimeEnd()), e2.getDate().atTime(e2.getTime())).toMinutes() > 0) {
-                int days = (int)Duration.between(e1.getDateEnd().atStartOfDay(), e2.getDate().atStartOfDay()).toDays();
+            EventObject e1 = events.get(i-1);
+            EventObject e2 = events.get(i);
+            if (Duration.between(e1.getEndDate().atTime(e1.getEndTime()), e2.getStartDate().atTime(e2.getStartTime())).toMinutes() > 0) {
+                int days = (int)Duration.between(e1.getEndDate().atStartOfDay(), e2.getStartDate().atStartOfDay()).toDays();
                 if (days > 0) {
-                    intervals.add(new Interval(e1.getTimeEnd(), LocalTime.MAX, e1.getDateEnd()));
+                    intervals.add(new Interval(e1.getEndTime(), LocalTime.MAX, e1.getEndDate()));
                     for (int j = 1; j < days; j++) {
-                        intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, e1.getDateEnd().plusDays(j)));
+                        intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, e1.getEndDate().plusDays(j)));
                     }
-                    intervals.add(new Interval(LocalTime.MIN, e2.getTime(), e2.getDate()));
+                    intervals.add(new Interval(LocalTime.MIN, e2.getStartTime(), e2.getStartDate()));
                 } else {
-                    intervals.add(new Interval(e1.getTimeEnd(), e2.getTime(), e1.getDateEnd()));
+                    intervals.add(new Interval(e1.getEndTime(), e2.getStartTime(), e1.getEndDate()));
                 }
             }
         }
 
-        if (events.size() > 0 && Duration.between(events.get(0).getDate().atTime(events.get(0).getTime()), deadline).toMinutes() > 0) {
-            int days = (int)Duration.between(events.get(0).getDate().atStartOfDay(), deadline.toLocalDate().atStartOfDay()).toDays();
+        if (events.size() > 0 && Duration.between(events.get(0).getStartDate().atTime(events.get(0).getStartTime()), deadline).toMinutes() > 0) {
+            int days = (int)Duration.between(events.get(0).getStartDate().atStartOfDay(), deadline.toLocalDate().atStartOfDay()).toDays();
             if (days > 0) {
-                intervals.add(new Interval(events.get(events.size()-1).getTimeEnd(), LocalTime.MAX, events.get(events.size()-1).getDateEnd()));
+                intervals.add(new Interval(events.get(events.size()-1).getEndTime(), LocalTime.MAX, events.get(events.size()-1).getEndDate()));
                 for (int i = 1; i < days; i++) {
-                    intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, events.get(events.size()-1).getDateEnd().plusDays(i)));
+                    intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, events.get(events.size()-1).getEndDate().plusDays(i)));
                 }
                 intervals.add(new Interval(LocalTime.MIN, deadline.toLocalTime(), deadline.toLocalDate()));
             } else {
-                intervals.add(new Interval(events.get(events.size()-1).getTime(), deadline.toLocalTime(), deadline.toLocalDate()));
+                intervals.add(new Interval(events.get(events.size()-1).getStartTime(), deadline.toLocalTime(), deadline.toLocalDate()));
             }
         }
 
@@ -128,7 +133,7 @@ public class AutoPlan {
         System.out.println("test6 "+workloadEstimate);
 
         if (workloadEstimate > total) { //Too little time to plan everything
-            return new ArrayList<Event>();
+            return;
         }
 
         int alpha = 1; //Parameter to prioritize in the middle of the day
@@ -165,11 +170,11 @@ public class AutoPlan {
             }
         }
 
-        ArrayList<Event> out = new ArrayList<>();
         for (Interval interval : planned) {
-            out.add(new Event(name, taskId, interval.getDate(), interval.getStart(), interval.getDate(), interval.getEnd()));
+            String id = reference.push().getKey();
+            EventDatabaseObject event = new EventDatabaseObject(name, id, taskId, interval.getDate().toString(), interval.getStart().toString(), interval.getDate().toString(), interval.getEnd().toString(), location, notes);
+            reference.child(id).setValue(event);
+            EventObject.eventsList.add(EventDatabaseObject.convertToEventObject(event));
         }
-
-        return out;
     }
 }
