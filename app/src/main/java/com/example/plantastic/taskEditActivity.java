@@ -34,6 +34,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,6 +54,7 @@ public class taskEditActivity  extends AppCompatActivity {
 
     // Variables regarding the Firebase database.
     private DatabaseReference reference;
+    private DatabaseReference eventReference;
     private DatabaseReference average;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -99,7 +101,8 @@ public class taskEditActivity  extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         onlineUserID = mUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
-        // average = FirebaseDatabase.getInstance().getReference().child("average");
+        eventReference = FirebaseDatabase.getInstance().getReference().child("events").child(onlineUserID);
+        average = FirebaseDatabase.getInstance().getReference().child("average");
     }
 
 
@@ -170,6 +173,34 @@ public class taskEditActivity  extends AppCompatActivity {
                 }
             }
         });
+        System.out.println("test");
+        // autoplan
+        if (isChecked) {
+            System.out.println("1");
+            LocalDateTime deadline = selectedDate.atTime(selectedTime);
+            ArrayList<Event> planned = AutoPlan.AutoPlan(deadline, taskName, id);
+            System.out.println("2 "+deadline.toString()+" "+planned.size());
+            Event.eventsList.addAll(planned);
+
+            for (Event event : planned) {
+                String eventId = eventReference.push().getKey();
+                eventHelper eventHelper = new eventHelper(eventId, id, taskName, event.getDate().toString(), event.getDateEnd().toString(), event.getTime().toString(), event.getTimeEnd().toString());
+                eventReference.child(eventId).setValue(eventHelper);
+            }
+            System.out.println("3");
+            // average stuff
+            Average avg = Average.getAverage(taskName);
+            if (avg != null) {
+                avg.staticUpdate();
+                average.child(avg.getId()).setValue(avg);
+            } else {
+                String id2 = average.push().getKey();
+                Average avg2 = new Average(id2, taskName);
+                avg2.update(120);
+                Average.averages.add(avg2);
+                average.child(id2).setValue(avg2);
+            }
+        }
 
         TaskObject.tasksList.add(TaskDatabaseObject.convertToTaskObject(tempTask));
         finish();

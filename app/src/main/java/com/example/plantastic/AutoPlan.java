@@ -15,10 +15,11 @@ import java.util.Comparator;
 public class AutoPlan {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<Event> AutoPlan(LocalDateTime deadline, String name, String taskId) {
+    public static ArrayList<Event> AutoPlan(LocalDateTime deadline, String name, String taskId) {
 
         LocalDateTime now = LocalDateTime.now();
 
+        System.out.println("test1 "+now.toString());
         ArrayList<Event> events = new ArrayList<>();
         for (Event event : Event.eventsList) {
             LocalDateTime start = event.getDate().atTime(event.getTime());
@@ -27,6 +28,7 @@ public class AutoPlan {
                 events.add(event);
             }
         }
+        System.out.println("test2 "+events.size());
 
         Collections.sort(events, new Comparator<Event>() {
             @Override
@@ -42,7 +44,7 @@ public class AutoPlan {
         ArrayList<Interval> intervals = new ArrayList<>();
 
         if (events.size() > 0 && Duration.between(now, events.get(0).getDate().atTime(events.get(0).getTime())).toMinutes() > 0) {
-            int days = (int)Duration.between(now.toLocalDate(), events.get(0).getDate()).toDays();
+            int days = (int)Duration.between(now.toLocalDate().atStartOfDay(), events.get(0).getDate().atStartOfDay()).toDays();
             if (days > 0) {
                 intervals.add(new Interval(now.toLocalTime(), LocalTime.MAX, now.toLocalDate()));
                 for (int i = 1; i < days; i++) {
@@ -58,7 +60,7 @@ public class AutoPlan {
             Event e1 = events.get(i-1);
             Event e2 = events.get(i);
             if (Duration.between(e1.getDateEnd().atTime(e1.getTimeEnd()), e2.getDate().atTime(e2.getTime())).toMinutes() > 0) {
-                int days = (int)Duration.between(e1.getDateEnd(), e2.getDate()).toDays();
+                int days = (int)Duration.between(e1.getDateEnd().atStartOfDay(), e2.getDate().atStartOfDay()).toDays();
                 if (days > 0) {
                     intervals.add(new Interval(e1.getTimeEnd(), LocalTime.MAX, e1.getDateEnd()));
                     for (int j = 1; j < days; j++) {
@@ -72,17 +74,32 @@ public class AutoPlan {
         }
 
         if (events.size() > 0 && Duration.between(events.get(0).getDate().atTime(events.get(0).getTime()), deadline).toMinutes() > 0) {
-            int days = (int)Duration.between(events.get(0).getDate(), deadline.toLocalDate()).toDays();
+            int days = (int)Duration.between(events.get(0).getDate().atStartOfDay(), deadline.toLocalDate().atStartOfDay()).toDays();
             if (days > 0) {
                 intervals.add(new Interval(events.get(events.size()-1).getTimeEnd(), LocalTime.MAX, events.get(events.size()-1).getDateEnd()));
                 for (int i = 1; i < days; i++) {
-                    intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, now.toLocalDate().plusDays(i)));
+                    intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, events.get(events.size()-1).getDateEnd().plusDays(i)));
                 }
                 intervals.add(new Interval(LocalTime.MIN, deadline.toLocalTime(), deadline.toLocalDate()));
             } else {
                 intervals.add(new Interval(events.get(events.size()-1).getTime(), deadline.toLocalTime(), deadline.toLocalDate()));
             }
         }
+
+        if(events.size() == 0) {
+            int days = (int)Duration.between(now.toLocalDate().atStartOfDay(), deadline.toLocalDate().atStartOfDay()).toDays();
+            if (days > 0) {
+                intervals.add(new Interval(now.toLocalTime(), LocalTime.MAX, now.toLocalDate()));
+                for (int i = 1; i < days; i++) {
+                    intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, now.toLocalDate().plusDays(i)));
+                }
+                intervals.add(new Interval(LocalTime.MIN, deadline.toLocalTime(), deadline.toLocalDate()));
+            } else {
+                intervals.add(new Interval(now.toLocalTime(), deadline.toLocalTime(), now.toLocalDate()));
+            }
+        }
+
+        System.out.println("test3 "+intervals.size());
 
         int minLength = 10; // minimal of 10 minutes as interval
         for (int i = intervals.size()-1; i >= 0; i--) {
@@ -91,18 +108,24 @@ public class AutoPlan {
             }
         }
 
-        int[] totalTimes = new int[(int)Duration.between(now.toLocalDate(), deadline.toLocalDate()).toDays() + 1];
+        System.out.println("test4 "+intervals.size()+" "+((int)Duration.between(now.toLocalDate().atStartOfDay(), deadline.toLocalDate().atStartOfDay()).toDays() + 1));
+
+        int[] totalTimes = new int[(int)Duration.between(now.toLocalDate().atStartOfDay(), deadline.toLocalDate().atStartOfDay()).toDays() + 1];
         int total = 0;
         for (Interval interval : intervals) {
-            totalTimes[(int)Duration.between(now.toLocalDate(), interval.getDate()).toDays()] += interval.getLength();
+            totalTimes[(int)Duration.between(now.toLocalDate().atStartOfDay(), interval.getDate().atStartOfDay()).toDays()] += interval.getLength();
             total += interval.getLength();
         }
+
+        System.out.println("test5 "+totalTimes.length+" "+total);
 
         int workloadEstimate = 120; //2 hours if there is no estimate yet
         Average avg = Average.getAverage(name);
         if (avg != null) {
             workloadEstimate = (int)(avg.getSum()/avg.getCount());
         }
+
+        System.out.println("test6 "+workloadEstimate);
 
         if (workloadEstimate > total) { //Too little time to plan everything
             return new ArrayList<Event>();
@@ -116,12 +139,12 @@ public class AutoPlan {
             @Override
             public int compare(Interval i1, Interval i2) {
                 int value1 = alpha*((int)Math.abs(Duration.between(i1.getStart(), LocalTime.NOON).toMinutes()) + (int)Math.abs(Duration.between(i1.getEnd(), LocalTime.NOON).toMinutes()));
-                value1 += beta*((int)Duration.between(now.toLocalDate(), i1.getDate()).toDays());
-                value1 += gamma*totalTimes[(int)Duration.between(now.toLocalDate(), i1.getDate()).toDays()];
+                value1 += beta*((int)Duration.between(now.toLocalDate().atStartOfDay(), i1.getDate().atStartOfDay()).toDays());
+                value1 += gamma*totalTimes[(int)Duration.between(now.toLocalDate().atStartOfDay(), i1.getDate().atStartOfDay()).toDays()];
 
                 int value2 = alpha*((int)Math.abs(Duration.between(i2.getStart(), LocalTime.NOON).toMinutes()) + (int)Math.abs(Duration.between(i2.getEnd(), LocalTime.NOON).toMinutes()));
-                value2 += beta*((int)Duration.between(now.toLocalDate(), i2.getDate()).toDays());
-                value2 += gamma*totalTimes[(int)Duration.between(now.toLocalDate(), i2.getDate()).toDays()];
+                value2 += beta*((int)Duration.between(now.toLocalDate().atStartOfDay(), i2.getDate().atStartOfDay()).toDays());
+                value2 += gamma*totalTimes[(int)Duration.between(now.toLocalDate().atStartOfDay(), i2.getDate().atStartOfDay()).toDays()];
 
                 return value1 - value2;
             }

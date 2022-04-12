@@ -37,6 +37,11 @@ public class Average {
         this.count++;
     }
 
+    public void staticUpdate() {
+        this.sum += sum/count;
+        this.count++;
+    }
+
     public String getId() {
         return id;
     }
