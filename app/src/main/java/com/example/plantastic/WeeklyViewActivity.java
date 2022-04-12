@@ -111,8 +111,8 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
     }
 
     private void setEventAdapater() {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
-        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        ArrayList<EventObject> dailyEventObjects = EventObject.eventsForDate(CalendarUtils.selectedDate);
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEventObjects);
         eventListView.setAdapter(eventAdapter);
     }
 

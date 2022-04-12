@@ -2,7 +2,6 @@ package com.example.plantastic;
 
 import static com.example.plantastic.CalendarUtils.daysInMonthArray;
 import static com.example.plantastic.CalendarUtils.monthYearFromDate;
-import static com.example.plantastic.CalendarUtils.selectedDate;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -18,16 +17,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.plantastic.login.Login;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +30,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
@@ -81,7 +75,7 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
         navigationView.setCheckedItem(R.id.nav_monthly);
 
         //Retrieving Events from database
-        if (Event.eventsList.size() == 0) {
+        if (EventObject.eventsList.size() == 0) {
             retrieveEvents();
         }
 
@@ -108,17 +102,9 @@ public class MonthlyView extends AppCompatActivity implements CalendarAdapter.on
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    eventHelper event = snapshot.getValue(eventHelper.class);
+                    EventDatabaseObject event = snapshot.getValue(EventDatabaseObject.class);
 
-                    String name = event.getName();
-                    String taskId = event.getTaskId();
-                    LocalDate startDate = LocalDate.parse(event.getStartDate());
-                    LocalTime startTime = LocalTime.parse(event.getStartTime());
-                    LocalDate endDate = LocalDate.parse(event.getEndDate());
-                    LocalTime endTime = LocalTime.parse(event.getEndTime());
-
-                    Event newEvent = new Event(name, taskId, startDate, startTime, endDate, endTime);
-                    Event.eventsList.add(newEvent);
+                    EventObject.eventsList.add(EventDatabaseObject.convertToEventObject(event));
                 }
             }
 

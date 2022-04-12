@@ -50,7 +50,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
 
         // This code gets all the events for the current date.
-        ArrayList<Event> eventsToday = Event.eventsForDate(date);
+        ArrayList<EventObject> eventsToday = EventObject.eventsForDate(date);
 
         // Set all fields invisible first, and make visible in the if statements.
         holder.event1.setVisibility(View.INVISIBLE);
