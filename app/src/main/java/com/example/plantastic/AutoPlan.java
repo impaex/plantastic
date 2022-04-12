@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,72 +14,72 @@ import java.util.Comparator;
 public class AutoPlan {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<Event> AutoPlan(LocalDateTime deadline, String name, String taskId) {
+    public ArrayList<EventObject> AutoPlan(LocalDateTime deadline, String name, String taskId) {
 
         LocalDateTime now = LocalDateTime.now();
 
-        ArrayList<Event> events = new ArrayList<>();
-        for (Event event : Event.eventsList) {
-            LocalDateTime start = event.getDate().atTime(event.getTime());
-            LocalDateTime end = event.getDateEnd().atTime(event.getTimeEnd());
+        ArrayList<EventObject> eventObjects = new ArrayList<>();
+        for (EventObject eventObject : EventObject.eventsList) {
+            LocalDateTime start = eventObject.getStartDate().atTime(eventObject.getStartTime());
+            LocalDateTime end = eventObject.getEndDate().atTime(eventObject.getEndTime());
             if (Duration.between(now, end).toMinutes() > 0 && Duration.between(start, deadline).toMinutes() > 0) {
-                events.add(event);
+                eventObjects.add(eventObject);
             }
         }
 
-        Collections.sort(events, new Comparator<Event>() {
+        Collections.sort(eventObjects, new Comparator<EventObject>() {
             @Override
-            public int compare(Event e1, Event e2) {
-                if (Duration.between(e1.getDate().atTime(e1.getTime()), e2.getDate().atTime(e2.getTime())).toMinutes() != 0) {
-                    return (int)Duration.between(e1.getDate().atTime(e1.getTime()), e2.getDateEnd().atTime(e2.getTime())).toMinutes();
+            public int compare(EventObject e1, EventObject e2) {
+                if (Duration.between(e1.getStartDate().atTime(e1.getStartTime()), e2.getStartDate().atTime(e2.getStartTime())).toMinutes() != 0) {
+                    return (int)Duration.between(e1.getStartDate().atTime(e1.getStartTime()), e2.getEndDate().atTime(e2.getStartTime())).toMinutes();
                 } else {
-                    return (int)Duration.between(e1.getDateEnd().atTime(e1.getTimeEnd()), e2.getDateEnd().atTime(e2.getTimeEnd())).toMinutes();
+                    return (int)Duration.between(e1.getEndDate().atTime(e1.getEndTime()), e2.getEndDate().atTime(e2.getEndTime())).toMinutes();
                 }
             }
         });
 
         ArrayList<Interval> intervals = new ArrayList<>();
 
-        if (events.size() > 0 && Duration.between(now, events.get(0).getDate().atTime(events.get(0).getTime())).toMinutes() > 0) {
-            int days = (int)Duration.between(now.toLocalDate(), events.get(0).getDate()).toDays();
+        if (eventObjects.size() > 0 && Duration.between(now, eventObjects.get(0).getStartDate().atTime(eventObjects.get(0).getStartTime())).toMinutes() > 0) {
+            int days = (int)Duration.between(now.toLocalDate(), eventObjects.get(0).getStartDate()).toDays();
             if (days > 0) {
                 intervals.add(new Interval(now.toLocalTime(), LocalTime.MAX, now.toLocalDate()));
                 for (int i = 1; i < days; i++) {
                     intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, now.toLocalDate().plusDays(i)));
                 }
-                intervals.add(new Interval(LocalTime.MIN, events.get(0).getTime(), events.get(0).getDate()));
+                intervals.add(new Interval(LocalTime.MIN, eventObjects.get(0).getStartTime(), eventObjects.get(0).getStartDate()));
             } else {
-                intervals.add(new Interval(now.toLocalTime(), events.get(0).getTime(), now.toLocalDate()));
+                intervals.add(new Interval(now.toLocalTime(), eventObjects.get(0).getStartTime(), now.toLocalDate()));
             }
         }
 
-        for (int i = 1; i < events.size(); i++) {
-            Event e1 = events.get(i-1);
-            Event e2 = events.get(i);
-            if (Duration.between(e1.getDateEnd().atTime(e1.getTimeEnd()), e2.getDate().atTime(e2.getTime())).toMinutes() > 0) {
-                int days = (int)Duration.between(e1.getDateEnd(), e2.getDate()).toDays();
+        for (int i = 1; i < eventObjects.size(); i++) {
+            EventObject e1 = eventObjects.get(i-1);
+            EventObject e2 = eventObjects.get(i);
+            if (Duration.between(e1.getEndDate().atTime(e1.getEndTime()), e2.getStartDate().atTime(e2.getStartTime())).toMinutes() > 0) {
+                int days = (int)Duration.between(e1.getEndDate(), e2.getStartDate()).toDays();
                 if (days > 0) {
-                    intervals.add(new Interval(e1.getTimeEnd(), LocalTime.MAX, e1.getDateEnd()));
+                    intervals.add(new Interval(e1.getEndTime(), LocalTime.MAX, e1.getEndDate()));
                     for (int j = 1; j < days; j++) {
-                        intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, e1.getDateEnd().plusDays(j)));
+                        intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, e1.getEndDate().plusDays(j)));
                     }
-                    intervals.add(new Interval(LocalTime.MIN, e2.getTime(), e2.getDate()));
+                    intervals.add(new Interval(LocalTime.MIN, e2.getStartTime(), e2.getStartDate()));
                 } else {
-                    intervals.add(new Interval(e1.getTimeEnd(), e2.getTime(), e1.getDateEnd()));
+                    intervals.add(new Interval(e1.getEndTime(), e2.getStartTime(), e1.getEndDate()));
                 }
             }
         }
 
-        if (events.size() > 0 && Duration.between(events.get(0).getDate().atTime(events.get(0).getTime()), deadline).toMinutes() > 0) {
-            int days = (int)Duration.between(events.get(0).getDate(), deadline.toLocalDate()).toDays();
+        if (eventObjects.size() > 0 && Duration.between(eventObjects.get(0).getStartDate().atTime(eventObjects.get(0).getStartTime()), deadline).toMinutes() > 0) {
+            int days = (int)Duration.between(eventObjects.get(0).getStartDate(), deadline.toLocalDate()).toDays();
             if (days > 0) {
-                intervals.add(new Interval(events.get(events.size()-1).getTimeEnd(), LocalTime.MAX, events.get(events.size()-1).getDateEnd()));
+                intervals.add(new Interval(eventObjects.get(eventObjects.size()-1).getEndTime(), LocalTime.MAX, eventObjects.get(eventObjects.size()-1).getEndDate()));
                 for (int i = 1; i < days; i++) {
                     intervals.add(new Interval(LocalTime.MIN, LocalTime.MAX, now.toLocalDate().plusDays(i)));
                 }
                 intervals.add(new Interval(LocalTime.MIN, deadline.toLocalTime(), deadline.toLocalDate()));
             } else {
-                intervals.add(new Interval(events.get(events.size()-1).getTime(), deadline.toLocalTime(), deadline.toLocalDate()));
+                intervals.add(new Interval(eventObjects.get(eventObjects.size()-1).getStartTime(), deadline.toLocalTime(), deadline.toLocalDate()));
             }
         }
 
@@ -105,7 +104,7 @@ public class AutoPlan {
         }
 
         if (workloadEstimate > total) { //Too little time to plan everything
-            return new ArrayList<Event>();
+            return new ArrayList<EventObject>();
         }
 
         int alpha = 1; //Parameter to prioritize in the middle of the day
@@ -142,9 +141,10 @@ public class AutoPlan {
             }
         }
 
-        ArrayList<Event> out = new ArrayList<>();
+        ArrayList<EventObject> out = new ArrayList<>();
         for (Interval interval : planned) {
-            out.add(new Event(name, taskId, interval.getDate(), interval.getStart(), interval.getDate(), interval.getEnd()));
+            // TODO: Uncomment and make sure it contains a location and notes. This is part of the constructor now. This may be an empty string.
+            // out.add(new EventObject(name, taskId, interval.getDate(), interval.getStart(), interval.getDate(), interval.getEnd()));
         }
 
         return out;
