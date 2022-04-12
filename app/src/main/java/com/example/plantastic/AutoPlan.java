@@ -15,15 +15,15 @@ import java.util.Comparator;
 public class AutoPlan {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static ArrayList<Event> AutoPlan(LocalDateTime deadline, String name, String taskId) {
+    public static ArrayList<EventObject> AutoPlan(LocalDateTime deadline, String name, String taskId) {
 
         LocalDateTime now = LocalDateTime.now();
 
         System.out.println("test1 "+now.toString());
-        ArrayList<Event> events = new ArrayList<>();
-        for (Event event : Event.eventsList) {
-            LocalDateTime start = event.getDate().atTime(event.getTime());
-            LocalDateTime end = event.getDateEnd().atTime(event.getTimeEnd());
+        ArrayList<EventObject> events = new ArrayList<>();
+        for (EventObject event : EventObject.eventsList) {
+            LocalDateTime start = event.getStartTime().atTime(event.getStartDate());
+            LocalDateTime end = event.getEndDate().atTime(event.getEndTime());
             if (Duration.between(now, end).toMinutes() > 0 && Duration.between(start, deadline).toMinutes() > 0) {
                 events.add(event);
             }
