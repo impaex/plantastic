@@ -195,7 +195,7 @@ public class EventEditActivity  extends AppCompatActivity {
 
 
         // TODO: taskID is now prefilled, should be connected to the selected task in interface.
-        String taskID = "test";
+        String taskID = "";
 
         EventDatabaseObject EventDatabaseObj = new EventDatabaseObject(eventName, taskID, id, selectedStartDateString, selectedStartTimeString, selectedEndDateString, selectedEndTimeString, eventLocation, eventNotes);
         reference.child(id).setValue(EventDatabaseObj).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -259,6 +259,19 @@ public class EventEditActivity  extends AppCompatActivity {
      */
     public void openTimePicker1(View view) {endTimePickerDialog.show(); }
 
-
+    /**
+     * This function turns off the time buttons when 'all-day' is selected.
+     * @param view
+     */
+    public void allDayClicked(View view) {
+        if (allDay.isChecked()) {
+            eventStartTimeBTN.setVisibility(view.INVISIBLE);
+            eventEndTimeBTN.setVisibility(view.INVISIBLE);
+        }
+        else {
+            eventStartTimeBTN.setVisibility(view.VISIBLE);
+            eventEndTimeBTN.setVisibility(view.VISIBLE);
+        }
+    }
 
 }
