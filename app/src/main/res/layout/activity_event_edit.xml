@@ -137,7 +137,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine"
+        app:layout_constraintTop_toBottomOf="@+id/eventNoteET"
         app:layout_constraintVertical_bias="0.0" />
 
     <View
@@ -200,7 +200,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
-        android:id="@+id/editTextTextPostalAddress"
+        android:id="@+id/eventLocationET"
         android:layout_width="240dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
@@ -229,7 +229,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/eventNoteET"
         android:layout_width="240dp"
         android:layout_height="100dp"
         android:layout_marginTop="44dp"
@@ -239,7 +239,7 @@
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPostalAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/eventLocationET" />
 
     <Button
         android:id="@+id/eventDeleteButton"
@@ -255,8 +255,8 @@
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.978"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine"
+        app:layout_constraintTop_toBottomOf="@+id/eventNoteET"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- TODO: Add on-click for deleting the event here -->
+    <!-- TODO: Add on-click for deleting the eventObject here -->

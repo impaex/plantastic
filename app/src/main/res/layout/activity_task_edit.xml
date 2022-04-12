@@ -217,4 +217,4 @@
         app:layout_constraintTop_toBottomOf="@+id/taskDateBTN" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- TODO: Add on-click for deleting the event here -->
+    <!-- TODO: Add on-click for deleting the eventObject here -->

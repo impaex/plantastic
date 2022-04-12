@@ -195,7 +195,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextMultiLine" />
+        app:layout_constraintTop_toBottomOf="@id/eventNoteET" />
 
     <View
         android:id="@+id/divider"
@@ -210,7 +210,7 @@
         app:layout_constraintVertical_bias="0.501" />
 
     <EditText
-        android:id="@+id/editTextTextPostalAddress"
+        android:id="@+id/eventLocationET"
         android:layout_width="400dp"
         android:layout_height="48dp"
         android:layout_marginTop="12dp"
@@ -224,7 +224,7 @@
         app:layout_constraintTop_toBottomOf="@+id/allDayCheckBox" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/eventNoteET"
         android:layout_width="400dp"
         android:layout_height="90dp"
         android:layout_marginTop="12dp"
@@ -235,8 +235,8 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/editTextTextPostalAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPostalAddress" />
+        app:layout_constraintStart_toStartOf="@id/eventLocationET"
+        app:layout_constraintTop_toBottomOf="@+id/eventLocationET" />
 
     <Button
         android:id="@+id/eventDeleteButton"
@@ -250,9 +250,9 @@
         android:text="Delete"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/editTextTextMultiLine"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextMultiLine"
+        app:layout_constraintStart_toStartOf="@id/eventNoteET"
+        app:layout_constraintTop_toBottomOf="@id/eventNoteET"
         app:layout_constraintVertical_bias="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- TODO: Add on-click for deleting the event here -->
+    <!-- TODO: Add on-click for deleting the eventObject here -->
