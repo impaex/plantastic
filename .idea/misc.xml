@@ -50,8 +50,9 @@
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/activity_monthly_view.xml" value="0.348294434470377" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/activity_task_edit.xml" value="0.25" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/activity_weekly_view.xml" value="0.303125" />
-        <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/calendar_cell.xml" value="1.0" />
-        <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/event_cell.xml" value="0.29739583333333336" />
+        <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/calendar_cell.xml" value="0.75" />
+        <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/event_cell.xml" value="0.22" />
+        <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/header.xml" value="0.16858108108108108" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/hour_cell.xml" value="0.29739583333333336" />
         <entry key="..\:/Users/MDOpc/AndroidStudioProjects/plantastic/app/src/main/res/layout/toolbar.xml" value="0.25101351351351353" />
         <entry key="app/src/main/res/layout-land/activity_daily_view.xml" value="0.26763668430335097" />
