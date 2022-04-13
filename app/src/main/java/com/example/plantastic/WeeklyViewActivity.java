@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_weekly_view);
 
-
+        // Navbar stuff.
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool);
@@ -66,6 +67,7 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
+        System.out.println(CalendarUtils.selectedDate);
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.selectedDate);
 
@@ -105,15 +107,41 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
     }
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void onResume(){
         super.onResume();
         setEventAdapater();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setEventAdapater() {
         ArrayList<EventObject> dailyEventObjects = EventObject.eventsForDate(CalendarUtils.selectedDate);
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEventObjects);
         eventListView.setAdapter(eventAdapter);
+
+        // Add the on click event listener here.
+        eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                EventObject event = eventAdapter.getItem(position);
+                editTaskFunction(event);
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void editTaskFunction(EventObject event) {
+        Intent i = new Intent(this, EventEditActivity.class);
+        i.putExtra("name", event.getName());
+        i.putExtra("id", event.getId());
+        i.putExtra("taskId", event.getTaskId());
+        i.putExtra("startDate", Formatters.getNumericalDate(event.getStartDate()));
+        i.putExtra("startTime", Formatters.getTime(event.getStartTime()));
+        i.putExtra("endDate", Formatters.getNumericalDate(event.getEndDate()));
+        i.putExtra("endTime", Formatters.getTime(event.getEndTime()));
+        i.putExtra("location", event.getLocation());
+        i.putExtra("notes", event.getNotes());
+        startActivity(i);
     }
 
     // New event button
