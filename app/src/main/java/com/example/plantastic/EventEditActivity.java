@@ -2,6 +2,7 @@ package com.example.plantastic;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -34,7 +35,7 @@ public class EventEditActivity  extends AppCompatActivity {
 
     // The variables for the buttons and dialogs.
     private EditText eventNameET, eventLocationET, eventNoteET;
-    private Button eventStartDateBTN, eventStartTimeBTN, eventEndDateBTN, eventEndTimeBTN, saveButton;
+    private Button eventStartDateBTN, eventStartTimeBTN, eventEndDateBTN, eventEndTimeBTN, saveButton, eventDeleteButton;
     private CheckBox allDay;
     DatePickerDialog startDatePickerDialog;
     DatePickerDialog endDatePickerDialog;
@@ -45,6 +46,10 @@ public class EventEditActivity  extends AppCompatActivity {
     LocalTime selectedStartTime;
     LocalDate selectedEndDate;
     LocalTime selectedEndTime;
+
+    // TODO: taskID is now prefilled, should be connected to the selected task in interface.
+    private String taskId = "None";
+    private String Id = null;
 
     // Variables regarding the Firebase database.
     private DatabaseReference reference;
@@ -69,6 +74,7 @@ public class EventEditActivity  extends AppCompatActivity {
         eventLocationET = findViewById(R.id.eventLocationET);
         eventNoteET = findViewById(R.id.eventNoteET);
         saveButton = findViewById(R.id.saveEvent);
+        eventDeleteButton = findViewById(R.id.eventDeleteButton);
 
         eventStartDateBTN.setText(Formatters.getTodaysDate(false));
         eventEndDateBTN.setText(Formatters.getTodaysDate(false));
@@ -76,10 +82,43 @@ public class EventEditActivity  extends AppCompatActivity {
         eventStartTimeBTN.setText(Formatters.getCurrentTime());
         eventEndTimeBTN.setText(Formatters.getTime(LocalTime.now().plusHours(1)));
 
-        selectedStartDate = LocalDate.now();
-        selectedEndDate = LocalDate.now();
-        selectedStartTime = LocalTime.now();
-        selectedEndTime = LocalTime.now().plusHours(1);
+        // See if an event has been pressed which we want to edit.
+        Intent i = getIntent();
+        if (i.getExtras() != null) {
+            eventNameET.setText(i.getStringExtra("name"));
+
+            selectedStartDate = LocalDate.parse(i.getStringExtra("startDate"));
+            selectedStartTime = LocalTime.parse(i.getStringExtra("startTime"));
+            selectedEndDate = LocalDate.parse(i.getStringExtra("endDate"));
+            selectedEndTime = LocalTime.parse(i.getStringExtra("endTime"));
+
+            eventStartDateBTN.setText(Formatters.getTextDate(selectedStartDate));
+            eventEndDateBTN.setText(Formatters.getTextDate(selectedEndDate));
+
+            eventStartTimeBTN.setText(Formatters.getTime(selectedStartTime));
+            eventEndTimeBTN.setText(Formatters.getTime(selectedEndTime));
+
+            eventLocationET.setText(i.getStringExtra("location"));
+            eventNoteET.setText(i.getStringExtra("notes"));
+
+            taskId = i.getStringExtra("taskId");
+            Id = i.getStringExtra("id");
+
+            // Check the all day check box in case of an all day event.
+            if (i.getStringExtra("startTime").equals("00:00") && i.getStringExtra("endTime").equals("00:00") && selectedStartDate.equals(selectedEndDate)) {
+                allDay.setChecked(true);
+                eventStartTimeBTN.setVisibility(View.INVISIBLE);
+                eventEndTimeBTN.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        else {
+            selectedStartDate = LocalDate.now();
+            selectedEndDate = LocalDate.now();
+            selectedStartTime = LocalTime.now();
+            selectedEndTime = LocalTime.now().plusHours(1);
+            eventDeleteButton.setVisibility(View.INVISIBLE);
+        }
 
         initStartDatePicker();
         initEndDatePicker();
@@ -95,7 +134,7 @@ public class EventEditActivity  extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
         initWidgets();
@@ -212,10 +251,21 @@ public class EventEditActivity  extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveEventAction(View view) {
+
+
         String eventName = eventNameET.getText().toString();
         String eventLocation = eventLocationET.getText().toString();
         String eventNotes = eventNoteET.getText().toString();
-        String id = reference.push().getKey();
+
+        // Check if id already exists, if so, we're editing a task.
+        if (Id == null) {
+            Id = reference.push().getKey();
+        }
+        else {
+            EventObject event2Delete = EventObject.eventById(Id);
+            EventObject.eventsList.remove(event2Delete);
+        }
+
         Boolean isChecked = allDay.isChecked();
 
         // If the all Day button is checked, times range from 00:00 till 00:00.
@@ -230,11 +280,8 @@ public class EventEditActivity  extends AppCompatActivity {
         String selectedEndTimeString = Formatters.getTime(selectedEndTime);
 
 
-        // TODO: taskID is now prefilled, should be connected to the selected task in interface.
-        String taskID = "None";
-
-        EventDatabaseObject EventDatabaseObj = new EventDatabaseObject(eventName, taskID, id, selectedStartDateString, selectedStartTimeString, selectedEndDateString, selectedEndTimeString, eventLocation, eventNotes);
-        reference.child(id).setValue(EventDatabaseObj).addOnCompleteListener(new OnCompleteListener<Void>() {
+        EventDatabaseObject EventDatabaseObj = new EventDatabaseObject(eventName, Id, taskId, selectedStartDateString, selectedStartTimeString, selectedEndDateString, selectedEndTimeString, eventLocation, eventNotes);
+        reference.child(Id).setValue(EventDatabaseObj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -329,6 +376,18 @@ public class EventEditActivity  extends AppCompatActivity {
         }
 
         return true;
+    }
+
+
+    /**
+     * A simple delete event function.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void deleteEvent(View view) {
+        EventObject event = EventObject.eventById(Id);
+        EventObject.eventsList.remove(event);
+        reference.child(event.getId()).removeValue();
+        finish();
     }
 
 }
