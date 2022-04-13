@@ -59,7 +59,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
 
         // Ugly code, but we're in a hurry since we started too late so please just deal with it.
         if (eventsToday.size() > 0) {
-            System.out.println(eventsToday.get(0).getTaskId());
             if (eventsToday.size() == 1) {
                 holder.event1.setText(eventsToday.get(0).getName());
                 if (eventsToday.get(0).getTaskId().equals("None")) {
