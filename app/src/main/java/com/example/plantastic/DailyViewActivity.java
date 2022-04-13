@@ -86,6 +86,7 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
     private void setHourAdapter() {
         HourAdapter hourAdapter = new HourAdapter(getApplicationContext(), hourEventList());
         hourListView.setAdapter(hourAdapter);
+        hourListView.setSelection(8);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
