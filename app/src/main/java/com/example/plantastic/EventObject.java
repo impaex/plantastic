@@ -65,6 +65,21 @@ public class EventObject {
         return eventObjects;
     }
 
+    /**
+     * Function which finds an event by the given ID.
+     *
+     * @param Id the ID of the desired event in String.
+     * @return the EventObject.
+     */
+    public static EventObject eventById(String Id) {
+        for (EventObject event : eventsList) {
+            if (event.getId().equals(Id)) {
+                return event;
+            }
+        }
+        return null;
+    }
+
 
     public EventObject(String name, String id, String taskId, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String location, String notes) {
         this.name = name;
