@@ -28,6 +28,7 @@ import java.util.Locale;
 
 public class DailyViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Variables for the views
     private TextView monthDayText;
     private TextView dayOfWeekView;
     private ListView hourListView;
@@ -35,6 +36,13 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
     private NavigationView navigationView;
     private Toolbar toolbar;
 
+
+
+    /**
+     * This function runs when the activity is opened and created.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +68,20 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
         initWidget(); //finds each of the views by its IDs
     }
 
+    /**
+     * Function to initialize the widgets in the view.
+     */
     private void initWidget() {
         monthDayText = findViewById(R.id.monthDayText);
         dayOfWeekView = findViewById(R.id.dayOfWeekView);
         hourListView = findViewById(R.id.hourListView);
     }
 
+
+    /**
+     * Called when activity goes into foreground.
+     * State in which the app interacts with the user.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onResume() {
@@ -73,6 +89,9 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
         setDayView();
     }
 
+    /**
+     * Sets the daily view.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setDayView() {
         monthDayText.setText(CalendarUtils.monthDayFromDate(selectedDate));
@@ -101,31 +120,53 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
         return list;
     }
 
-    // previous day button
+    /**
+     * Action that belongs to the previous day button.
+     *
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusDays(1);
         setDayView();
     }
 
-    // Next day button
+    /**
+     * Action that belongs to the next day button.
+     *
+     * @param view
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusDays(1);
         setDayView();
     }
 
-    // new event button
+    /**
+     * Action that belongs to the new event button.
+     *
+     * @param view
+     */
     public void newEventAction(View view) {
         startActivity(new Intent(this, EventEditActivity.class));
     }
 
-    // New task button
+    /**
+     * Action that belongs to the new task button.
+     *
+     * @param view
+     */
     public void newTaskAction(View view) {
         startActivity(new Intent(this, taskEditActivity.class));
     }
 
-    // Logic for the drawer.
+    /**
+     * Logic for the drawer.
+     * @param item
+     *
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 

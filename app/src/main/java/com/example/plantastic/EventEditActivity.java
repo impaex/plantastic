@@ -367,8 +367,7 @@ public class EventEditActivity  extends AppCompatActivity {
         if (selectedEndDate.isBefore(selectedStartDate)) {
             Toast.makeText(EventEditActivity.this, "Make sure the 'until' date and time are after the 'from' date and time!", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if (selectedStartDate.equals(selectedEndDate)) {
+        } else if (selectedStartDate.equals(selectedEndDate)) {
             if (selectedEndTime.isBefore(selectedStartTime)) {
                 Toast.makeText(EventEditActivity.this, "Make sure the 'until' date and time are after the 'from' date and time!", Toast.LENGTH_LONG).show();
                 return false;
