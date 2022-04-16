@@ -14,7 +14,11 @@ import java.util.ArrayList;
 public class CalendarUtils {
     public static LocalDate selectedDate;
 
-    // This function returns the days in the month for month x.
+    /**
+     * function that puts the days in a month in an array.
+     *
+     * @return days in month for month x
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<LocalDate> daysInMonthArray(){
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
@@ -45,21 +49,36 @@ public class CalendarUtils {
 
     }
 
-    // Converter method.
+    /**
+     * converter method.
+     *
+     * @param date
+     * @return formatted date of pattern MMMM yyyy
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String monthYearFromDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         return date.format(formatter);
     }
 
-    // Converter method.
+    /**
+     * converter method.
+     *
+     * @param date
+     * @return formatted date of pattern MMMM d
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String monthDayFromDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d");
         return date.format(formatter);
     }
 
-
+    /**
+     * Returns the days of particular week x.
+     *
+     * @param selectedDate
+     * @return days
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate selectedDate) {
         ArrayList<LocalDate> days = new ArrayList<>();
@@ -74,6 +93,12 @@ public class CalendarUtils {
 
     }
 
+    /**
+     * Sets sunday as a day of the week
+     *
+     * @param current
+     * @return current
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static LocalDate sundayForDate(LocalDate current) {
         LocalDate oneWeekAgo = current.minusWeeks(1);
@@ -86,18 +111,21 @@ public class CalendarUtils {
         return null;
     }
 
+    //formatter method
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String formattedDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         return date.format(formatter);
     }
 
+    //formatter method
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String formattedTime(LocalTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
         return time.format(formatter);
     }
 
+    //formatter method
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String formattedShortTime(LocalTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");

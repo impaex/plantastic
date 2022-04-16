@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+    //Variables defined
     private final ArrayList<LocalDate> days;
     public final View parentView;
     public final TextView dayOfMonth, event1, event2, event3;
@@ -28,6 +29,11 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
         this.days = days;
     }
 
+    /**
+     * When clicked on the button, it receives an onClick event
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         onItemListener.onItemClick(getAdapterPosition(), days.get(getAdapterPosition()));

@@ -136,7 +136,6 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
      *
      * @param view
      */
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusDays(1);
@@ -165,7 +164,7 @@ public class DailyViewActivity extends AppCompatActivity implements NavigationVi
      * Logic for the drawer.
      * @param item
      *
-     * @return
+     * @return boolean
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

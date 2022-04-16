@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
 
+    //variables
     private final ArrayList<LocalDate> days;
     private final onItemListener onItemListener;
 
@@ -57,7 +58,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
         holder.event2.setVisibility(View.INVISIBLE);
         holder.event3.setVisibility(View.INVISIBLE);
 
-        // Ugly code, but we're in a hurry since we started too late so please just deal with it.
+
         if (eventsToday.size() > 0) {
             if (eventsToday.size() == 1) {
                 holder.event1.setText(eventsToday.get(0).getName());

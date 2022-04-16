@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 public class WeeklyViewActivity extends AppCompatActivity implements CalendarAdapter.onItemListener, NavigationView.OnNavigationItemSelectedListener {
 
+    //Variables for the views
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
@@ -38,7 +39,11 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
     private Toolbar toolbar;
 
 
-
+    /**
+     * This function runs when the activity is opened and created.
+     *
+     * @param savedInstanceState
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,9 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         setWeekView();
     }
 
+    /**
+     * Sets the weekly view.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         System.out.println(CalendarUtils.selectedDate);
@@ -78,26 +86,44 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         setEventAdapater();
     }
 
+    /**
+     * Function to initialize the widgets in the view.
+     */
     private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
         eventListView = findViewById(R.id.eventListView);
     }
 
-    // Sets view to a week before.
+    /**
+     * Action that belongs to the previous week button.
+     *
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousWeekAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
         setWeekView();
     }
 
-    // Sets view to a week after.
+    /**
+     * Action that belongs to the next week button.
+     * Sets view to the next week.
+     *
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextWeekAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusWeeks(1);
         setWeekView();
     }
 
+    /**
+     * Selects the day that is clicked on.
+     *
+     * @param position
+     * @param date
+     */
     // Selects whatever day you clicked on.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -106,12 +132,18 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         setWeekView();
     }
 
+    /**
+     * Called when activity goes into foreground.
+     * State in which the app interacts with the user.
+     */
     @Override
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected void onResume(){
         super.onResume();
         setEventAdapater();
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setEventAdapater() {
@@ -129,6 +161,10 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         });
     }
 
+
+    /**
+     * Function to edit a particular task when clicking on the task
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void editTaskFunction(EventObject event) {
         Intent i = new Intent(this, EventEditActivity.class);
@@ -144,12 +180,20 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         startActivity(i);
     }
 
-    // New event button
+    /**
+     * Action that belongs to the new event button.
+     *
+     * @param view
+     */
     public void newEventAction(View view) {
         startActivity(new Intent(this, EventEditActivity.class));
     }
 
-    // New task button
+    /**
+     * Action that belongs to the new task button.
+     *
+     * @param view
+     */
     public void newTaskAction(View view) {
         startActivity(new Intent(this, taskEditActivity.class));
     }
@@ -159,7 +203,12 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         startActivity(new Intent(this, DailyViewActivity.class));
     }
 
-    // Logic behind the drawer.
+    /**
+     * Logic for the drawer.
+     * @param item
+     *
+     * @return boolean
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
