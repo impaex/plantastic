@@ -111,21 +111,33 @@ public class CalendarUtils {
         return null;
     }
 
-    //formatter method
+    /**
+     * Formatter method.
+     * @param date
+     * @return date
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String formattedDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         return date.format(formatter);
     }
 
-    //formatter method
+    /**
+     * Formatter method.
+     * @param time
+     * @return time
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String formattedTime(LocalTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
         return time.format(formatter);
     }
 
-    //formatter method
+    /**
+     * Formatter method.
+     * @param time
+     * @return time
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String formattedShortTime(LocalTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");

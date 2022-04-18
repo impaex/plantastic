@@ -249,6 +249,10 @@ public class EventEditActivity  extends AppCompatActivity {
         endTimePickerDialog = new TimePickerDialog(this, onTimeSetListener, selectedEndTime.getHour(), selectedEndTime.getMinute(), true);
     }
 
+    /**
+     * Save event activity.
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveEventAction(View view) {
 
