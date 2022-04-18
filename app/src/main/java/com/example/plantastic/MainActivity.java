@@ -21,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseDatabase rootNode;
 
+    /**
+     * This function runs when the activity is opened and created.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -25,6 +25,7 @@ public class Interval {
         this.length = Duration.between(start, end).toMinutes();
     }
 
+    //all getters and setters
     public LocalTime getStart() {
         return start;
     }
