@@ -9,6 +9,12 @@ public class Average {
     private String id, name;
     private long sum, count;
 
+    /**
+     * Gives the average object for a given name
+     *
+     * @param name Name of the event/task of which the average is stored
+     * @return {@code (a \in averages :: a.name == name) || (null ==> \forall a \in averages :: a.name != name)}
+     */
     public static Average getAverage(String name) {
         for (Average avg : averages) {
             if (avg.name.equals(name)) {
@@ -32,11 +38,18 @@ public class Average {
         this.name = name;
     }
 
+    /**
+     * Update the average object when a new event/task is created with {@code updateSum} as time length
+     * @param updateSum The amount of time the event/task to add takes and with which the average is updated
+     */
     public void update(long updateSum) {
         this.sum += updateSum;
         this.count++;
     }
 
+    /**
+     * The same as update, but then implying that the updateSum is equal to the average of the already stored average object
+     */
     public void staticUpdate() {
         this.sum += sum/count;
         this.count++;
